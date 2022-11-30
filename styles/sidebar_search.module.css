@@ -1,0 +1,8 @@
+.side_search_bar dt {
+  float: left;
+}
+
+.side_search_bar dd {
+  margin-left: 100px;
+  margin-bottom: 1rem;
+}

@@ -1,0 +1,17 @@
+.side_search_bar dt {
+  float: left;
+}
+
+.side_search_bar dd {
+  margin-left: 80px;
+  margin-bottom: 1rem;
+}
+
+.bottom_card_action {
+  border-top: 1px solid #ddd;
+}
+
+.card_date {
+  min-width: 125px;
+  text-align: center;
+}
