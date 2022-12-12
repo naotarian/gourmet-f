@@ -8,12 +8,12 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
   const { data: user, error, revalidate } = useSWR('/api/admin/user', () =>
     axios
-      .get('/api/user')
+      .get('/api/admin/user')
       .then(res => res.data)
       .catch(error => {
-        if (error.response.status != 409) throw error
+        if (error.response.status != 409) return false
 
-        router.push('/verify-email')
+        router.push('/admin/verify-email')
       }),
   )
 
@@ -78,7 +78,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     axios
       .post('/admin/reset-password', { token: router.query.token, ...props })
       .then(response =>
-        router.push('/login?reset=' + btoa(response.data.status)),
+        router.push('/admin/login?reset=' + btoa(response.data.status)),
       )
       .catch(error => {
         if (error.response.status != 422) throw error
@@ -100,7 +100,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
       revalidate()
     }
 
-    window.location.pathname = '/login'
+    window.location.pathname = '/admin/login'
   }
 
   useEffect(() => {

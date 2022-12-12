@@ -1,7 +1,7 @@
 import { useAuth } from '@/hooks/auth'
 import { useState } from 'react'
 //components
-import SignUp from '../components/Auth/SignUp'
+import SignUp from '@/components/Auth/Portal/SignUp'
 import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
 import styled from 'styled-components'

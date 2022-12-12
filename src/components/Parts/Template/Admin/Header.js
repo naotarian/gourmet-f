@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 import AppBar from '@mui/material/AppBar'
 import Link from 'next/link'
-import { useAuth } from '@/hooks/auth'
-import HeaderCss from '../../../../styles/Parts/Template/Header.module.css'
+import { useAuth } from '@/hooks/authAdmin'
+import HeaderCss from '@/../styles/Parts/Template/Header.module.css'
 
 const StyledAppBar = styled(AppBar)`
   padding: 1rem;
@@ -28,11 +28,11 @@ const Header = () => {
           </div>
         ) : (
           <>
-            <Link href="/portal/login">
+            <Link href="/login">
               <a className={`ml-4 text-sm ${HeaderCss.headerLink}`}>Login</a>
             </Link>
 
-            <Link href="/portal/register">
+            <Link href="/register">
               <a className={`ml-4 text-sm ${HeaderCss.headerLink}`}>Register</a>
             </Link>
           </>

@@ -1,15 +1,15 @@
-import { useAuth } from '@/hooks/auth'
+import { useAuth } from '@/hooks/authAdmin'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 //components
-import SignIn from '../components/Auth/SignIn'
+import SignIn from '../../components/Auth/Admin/SignIn'
 
 const Login = () => {
   const router = useRouter()
 
   const { login } = useAuth({
     middleware: 'guest',
-    redirectIfAuthenticated: '/',
+    redirectIfAuthenticated: '/admin/dashbord/',
   })
 
   const [email, setEmail] = useState('')

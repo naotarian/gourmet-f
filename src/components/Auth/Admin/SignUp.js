@@ -54,7 +54,7 @@ export default function SignUp(props) {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            新規アカウント作成
+            新規加盟店様アカウント作成
           </Typography>
           <Box noValidate sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -118,8 +118,8 @@ export default function SignUp(props) {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/login" variant="body2">
-                  ログインはこちら
+                <Link href="/admin/login" variant="body2">
+                  加盟店様ログインはこちら
                 </Link>
               </Grid>
             </Grid>

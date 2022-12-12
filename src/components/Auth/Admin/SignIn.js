@@ -50,7 +50,7 @@ export default function SignIn(props) {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            ログイン
+            加盟店様ログイン
           </Typography>
           <Box noValidate sx={{ mt: 1 }}>
             <TextField
@@ -88,12 +88,12 @@ export default function SignIn(props) {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="/forgot-password" variant="body2">
+                <Link href="/admin/forgot-password" variant="body2">
                   パスワードを忘れた方はこちら
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/register" variant="body2">
+                <Link href="/admin/register" variant="body2">
                   {'新規アカウント登録'}
                 </Link>
               </Grid>

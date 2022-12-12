@@ -1,8 +1,8 @@
-import { useAuth } from '@/hooks/auth'
+import { useAuth } from '@/hooks/authAdmin'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 //components
-import ForgetPassword from '../components/Auth/ForgetPassword'
+import ForgetPassword from '@/components/Auth/Admin/ForgetPassword'
 
 const ForgotPassword = () => {
   const router = useRouter()
