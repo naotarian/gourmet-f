@@ -35,6 +35,11 @@ const Header = () => {
             <Link href="/portal/register">
               <a className={`ml-4 text-sm ${HeaderCss.headerLink}`}>Register</a>
             </Link>
+            <Link href="/admin/login">
+              <a className={`ml-4 text-sm ${HeaderCss.headerLink}`}>
+                加盟店様はこちら
+              </a>
+            </Link>
           </>
         )}
       </div>

@@ -14,17 +14,18 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein }
-}
-
 const RegistRestaurant = props => {
   const { datas } = props
+  console.log(datas)
   const mainCategories = datas.main_categories
   const subCategories = datas.sub_categories
+  const budgets = datas.budgets
   const [categories, setCategories] = useState(1)
   const [subCategoriesId, setSubCategoriesId] = useState(1)
   const [regularHoliday, setRegularHoliday] = useState(1)
+  const [lunchBudget, setLunchBudget] = useState(1)
+  const [dinnerBudget, setDinnerBudget] = useState(3)
+  const [takeOut, setTakeOut] = useState(1)
 
   const handleChange = event => {
     setCategories(event.target.value)
@@ -35,6 +36,15 @@ const RegistRestaurant = props => {
   }
   const subCategoryChange = e => {
     setSubCategoriesId(e.target.value)
+  }
+  const lunchBudgetChange = e => {
+    setLunchBudget(e.target.value)
+  }
+  const dinnerBudgetChange = e => {
+    setDinnerBudget(e.target.value)
+  }
+  const takeOutChange = e => {
+    setTakeOut(e.target.value)
   }
   return (
     <>
@@ -158,8 +168,56 @@ const RegistRestaurant = props => {
                       <MenuItem value={5}>金曜日</MenuItem>
                       <MenuItem value={6}>土曜日</MenuItem>
                       <MenuItem value={7}>日曜日</MenuItem>
-                      <MenuItem value={8}>年中無休</MenuItem>
-                      <MenuItem value={9}>不定休</MenuItem>
+                      <MenuItem value={8}>祝日</MenuItem>
+                      <MenuItem value={9}>年中無休</MenuItem>
+                      <MenuItem value={10}>不定休</MenuItem>
+                    </Select>
+                  </FormControl>
+                </TableCell>
+              </TableRow>
+              <TableRow
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell style={{ border: '1px solid #ddd' }}>予算</TableCell>
+                <TableCell style={{ border: '1px solid #ddd' }}>
+                  <TextField placeholder="例)2310412" size="small" fullWidth />
+                </TableCell>
+                <TableCell style={{ border: '1px solid #ddd' }}>予算</TableCell>
+                <TableCell style={{ border: '1px solid #ddd' }}>
+                  <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                    <Typography variant="small">
+                      ランチタイムの予算を選択してください。
+                    </Typography>
+                    <Select
+                      labelId="demo-select-small"
+                      id="demo-select-small"
+                      value={lunchBudget}
+                      onChange={lunchBudgetChange}>
+                      {budgets.map((data, index) => (
+                        <MenuItem value={data.id} key={index}>
+                          {data.price}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    <Typography variant="small">
+                      ディナータイムの予算を入力してください。
+                    </Typography>
+                    <Select value={dinnerBudget} onChange={dinnerBudgetChange}>
+                      {budgets.map((data, index) => (
+                        <MenuItem value={data.id} key={index}>
+                          {data.price}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </TableCell>
+                <TableCell style={{ border: '1px solid #ddd' }}>
+                  テイクアウト
+                </TableCell>
+                <TableCell style={{ border: '1px solid #ddd' }}>
+                  <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                    <Select value={takeOut} onChange={takeOutChange}>
+                      <MenuItem value={1}>有</MenuItem>
+                      <MenuItem value={0}>無</MenuItem>
                     </Select>
                   </FormControl>
                 </TableCell>
