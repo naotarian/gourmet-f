@@ -29,9 +29,11 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html>
+      <Html lang="ja">
         <Head>
           <meta name="theme-color" content={theme.palette.primary.main} />
+          <meta httpEquiv="Content-Language" content="ja" />
+          <meta name="google" content="notranslate" />
           <link
             href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap"
             rel="stylesheet"

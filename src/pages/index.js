@@ -12,6 +12,10 @@ export default function Home() {
           href="https://fonts.googleapis.com/css?family=Noto+Sans"
           rel="stylesheet"
         />
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width"
+        />
       </Head>
       <Header />
       <Link href="/result/result_list">

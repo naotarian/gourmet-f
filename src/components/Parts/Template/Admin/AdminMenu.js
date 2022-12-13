@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from '@/lib/axios'
 import { styled, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import Drawer from '@mui/material/Drawer'
 import CssBaseline from '@mui/material/CssBaseline'
 import MuiAppBar from '@mui/material/AppBar'
@@ -22,6 +24,8 @@ import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import { useRouter } from 'next/router'
+import { useAuth } from '@/hooks/authAdmin'
 
 const drawerWidth = 240
 
@@ -46,13 +50,14 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
   justifyContent: 'flex-end',
 }))
 
 const AdminMenu = props => {
   const theme = useTheme()
+  const router = useRouter()
+  const { logout } = useAuth()
   const { open, setOpen } = props
   const [expanded, setExpanded] = useState([])
   const handleChange = panel => (event, isExpanded) => {
@@ -63,13 +68,25 @@ const AdminMenu = props => {
         : expanded.filter((fruit, index) => fruit !== panel),
     )
   }
-
+  useEffect(() => {
+    ;(async () => {
+      try {
+        const res = await axios.get('/api/admin/user')
+        if (!res.data) router.push('/admin/login')
+      } catch (error) {
+        router.push('/admin/login')
+      }
+    })()
+  }, [])
   const handleDrawerOpen = () => {
     setOpen(true)
   }
 
   const handleDrawerClose = () => {
     setOpen(false)
+  }
+  const menuClick = path => {
+    router.push(path)
   }
 
   return (
@@ -86,7 +103,7 @@ const AdminMenu = props => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            店名様
+            ●●横浜店様
           </Typography>
         </Toolbar>
       </AppBar>
@@ -118,7 +135,8 @@ const AdminMenu = props => {
               <Accordion
                 expanded={expanded.includes('panel' + index)}
                 onChange={handleChange('panel' + index)}
-                style={{ margin: 0, padding: 0, boxShadow: 'none' }}>
+                style={{ margin: 0, padding: 0, boxShadow: 'none' }}
+                key={index}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   id="panel1bh-header"
@@ -139,8 +157,8 @@ const AdminMenu = props => {
                 <AccordionDetails style={{ padding: 0 }}>
                   <List>
                     {text.sub.map((text, index) => (
-                      <ListItem key={text} disablePadding>
-                        <ListItemButton>
+                      <ListItem key={index} disablePadding>
+                        <ListItemButton onClick={() => menuClick(text.path)}>
                           <ListItemIcon>
                             {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                           </ListItemIcon>
@@ -155,6 +173,13 @@ const AdminMenu = props => {
           })}
         </List>
         <Divider />
+
+        <Button
+          variant="outlined"
+          style={{ width: '80%', margin: '1rem auto' }}
+          onClick={logout}>
+          ログアウト
+        </Button>
       </Drawer>
     </Box>
   )
@@ -184,5 +209,9 @@ const menus = [
       { name: '座席管理', path: '/admin/dashbord/salesInformation' },
       { name: '座席予約状況', path: '/admin/dashbord/salesInformation' },
     ],
+  },
+  {
+    name: '店舗管理',
+    sub: [{ name: '店舗登録', path: '/admin/dashbord/restaurant/register' }],
   },
 ]
