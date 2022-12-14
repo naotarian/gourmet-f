@@ -76,7 +76,7 @@ const RegistRestaurant = props => {
         res.data.results[0].address3,
     )
   }
-  const submit = () => {
+  const submit = async () => {
     setNameErrors('')
     setEmailErrors('')
     setPostNumberErrors('')
@@ -89,8 +89,8 @@ const RegistRestaurant = props => {
       restaurantEmail: restaurantEmail,
       address: address,
       addressAfter: addressAfter,
-      restaurantPostNumber: restaurantPostNumber,
-      restaurantTel: restaurantTel,
+      restaurantPostNumber: restaurantPostNumber.replace(/-/g, ''),
+      restaurantTel: restaurantTel.replace(/-/g, ''),
       mainCategoryId: categories,
       subCategoryId: subCategoriesId,
       regularHoliday: regularHoliday,
@@ -100,7 +100,7 @@ const RegistRestaurant = props => {
       takeOut: takeOut,
       feature: feature,
     }
-    const validate = exportFunction.validate(formData)
+    const validate = await exportFunction.validate(formData)
     if (!validate.validate) {
       if (validate.nameError) {
         setNameErrors(
@@ -162,6 +162,9 @@ const RegistRestaurant = props => {
           )),
         )
       }
+    } else {
+      const res = await axios.post('/api/admin/restaurant/register', formData)
+      console.log(res)
     }
   }
   return (
