@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from '@/lib/axios'
 import { styled, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import Drawer from '@mui/material/Drawer'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -24,6 +25,11 @@ import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import Select from '@mui/material/Select'
+
 import { useRouter } from 'next/router'
 import { useAuth } from '@/hooks/authAdmin'
 
@@ -60,6 +66,8 @@ const AdminMenu = props => {
   const { logout } = useAuth()
   const { open, setOpen } = props
   const [expanded, setExpanded] = useState([])
+  const [restaurants, setRestaurants] = useState([])
+  const [age, setAge] = useState('')
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false)
     setExpanded(
@@ -73,6 +81,10 @@ const AdminMenu = props => {
       try {
         const res = await axios.get('/api/admin/user')
         if (!res.data) router.push('/admin/login')
+        const initialize = await axios.get('/api/admin/restaurant/initialize')
+        setRestaurants(initialize.data.restaurants)
+        console.log(initialize.data.active_restaurant_id)
+        setAge(initialize.data.active_restaurant_id)
       } catch (error) {
         router.push('/admin/login')
       }
@@ -89,6 +101,10 @@ const AdminMenu = props => {
     router.push(path)
   }
 
+  const restaurantChange = event => {
+    setAge(event.target.value)
+  }
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -102,9 +118,36 @@ const AdminMenu = props => {
             sx={{ mr: 2, ...(open && { display: 'none' }) }}>
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            ●●横浜店様
-          </Typography>
+          {age && restaurants.length > 0 && (
+            <Typography variant="h6" noWrap component="div">
+              {restaurants.map((data, index) => {
+                if (data.id === age) {
+                  return <>{data.restaurant_name}様</>
+                }
+              })}
+            </Typography>
+          )}
+          {age && restaurants.length > 1 && (
+            <Grid style={{ position: 'absolute', right: '100px' }}>
+              <Grid style={{ display: 'flex', alignItems: 'baseline' }}>
+                <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                  <Select
+                    value={age}
+                    style={{ background: '#fff' }}
+                    onChange={restaurantChange}>
+                    {restaurants.map((data, index) => (
+                      <MenuItem value={data.id} key={index}>
+                        {data.restaurant_name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <Button size="small" variant="outlined" color="secondary">
+                  切り替え
+                </Button>
+              </Grid>
+            </Grid>
+          )}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -131,45 +174,61 @@ const AdminMenu = props => {
         <Divider />
         <List style={{ padding: 0 }}>
           {menus.map((text, index) => {
-            return (
-              <Accordion
-                expanded={expanded.includes('panel' + index)}
-                onChange={handleChange('panel' + index)}
-                style={{ margin: 0, padding: 0, boxShadow: 'none' }}
-                key={index}>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  id="panel1bh-header"
-                  style={{
-                    paddingRight: '1rem',
-                    paddingLeft: 0,
-                    maxHeight: '40px',
-                  }}>
+            if (text.sub.length) {
+              return (
+                <Accordion
+                  expanded={expanded.includes('panel' + index)}
+                  onChange={handleChange('panel' + index)}
+                  style={{ margin: 0, padding: 0, boxShadow: 'none' }}
+                  key={index}>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    id="panel1bh-header"
+                    style={{
+                      paddingRight: '1rem',
+                      paddingLeft: 0,
+                      maxHeight: '40px',
+                    }}>
+                    <ListItem key={text} disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                        </ListItemIcon>
+                        <ListItemText primary={text.name} />
+                      </ListItemButton>
+                    </ListItem>
+                  </AccordionSummary>
+                  <AccordionDetails style={{ padding: 0 }}>
+                    <List>
+                      {text.sub.map((text, index) => (
+                        <ListItem key={index} disablePadding>
+                          <ListItemButton onClick={() => menuClick(text.path)}>
+                            <ListItemIcon>
+                              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                            </ListItemIcon>
+                            <ListItemText primary={text.name} />
+                          </ListItemButton>
+                        </ListItem>
+                      ))}
+                    </List>
+                  </AccordionDetails>
+                </Accordion>
+              )
+            } else {
+              return (
+                <>
                   <ListItem key={text} disablePadding>
-                    <ListItemButton>
+                    <ListItemButton onClick={() => menuClick(text.path)}>
                       <ListItemIcon>
                         {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                       </ListItemIcon>
                       <ListItemText primary={text.name} />
                     </ListItemButton>
                   </ListItem>
-                </AccordionSummary>
-                <AccordionDetails style={{ padding: 0 }}>
-                  <List>
-                    {text.sub.map((text, index) => (
-                      <ListItem key={index} disablePadding>
-                        <ListItemButton onClick={() => menuClick(text.path)}>
-                          <ListItemIcon>
-                            {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                          </ListItemIcon>
-                          <ListItemText primary={text.name} />
-                        </ListItemButton>
-                      </ListItem>
-                    ))}
-                  </List>
-                </AccordionDetails>
-              </Accordion>
-            )
+                  <Divider />
+                </>
+              )
+            }
           })}
         </List>
         <Divider />
@@ -188,6 +247,11 @@ const AdminMenu = props => {
 export default AdminMenu
 
 const menus = [
+  {
+    name: '管理画面TOP',
+    sub: [],
+    path: '/admin/dashbord',
+  },
   {
     name: '基本情報',
     sub: [{ name: '営業情報', path: '/admin/dashbord/salesInformation' }],
@@ -212,6 +276,9 @@ const menus = [
   },
   {
     name: '店舗管理',
-    sub: [{ name: '店舗登録', path: '/admin/dashbord/restaurant/register' }],
+    sub: [
+      { name: '店舗登録', path: '/admin/dashbord/restaurant/register' },
+      { name: '店舗一覧', path: '/admin/dashbord/restaurant/list' },
+    ],
   },
 ]

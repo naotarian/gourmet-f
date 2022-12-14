@@ -25,8 +25,14 @@ const register = props => {
   )
 }
 export default register
-export const getServerSideProps = async context => {
-  const res = await axios.get('/api/admin/restaurant/register')
+export const getServerSideProps = async ctx => {
+  const cookie = ctx.req?.headers.cookie
+  const res = await axios.get('/api/admin/restaurant/register', {
+    headers: {
+      origin: process.env.ORIGIN,
+      cookie: cookie,
+    },
+  })
   return {
     props: {
       res: res.data,
