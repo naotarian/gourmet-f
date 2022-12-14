@@ -112,7 +112,7 @@ const themeAdmin = createTheme({
       color: 'gray',
     },
     caption: {
-      fontSize: '1.25rem',
+      fontSize: '0.9rem',
       fontWeight: 700,
       color: 'rgba(0, 0, 0, 0.8)',
     },
