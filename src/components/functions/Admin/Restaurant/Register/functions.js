@@ -42,6 +42,18 @@ exports.validate = function (formData) {
   if (!telRequired) telError += '・店舗電話番号を入力してください。\n'
   if (telRequired && !telRegex.test(formData.restaurantTel.replace(/-/g, '')))
     telError += '・店舗電話番号の形式が不正です。\n'
+  //representativeTel
+  let representativeTelError = ''
+  const representativeTelRequired = requiredCheck(
+    formData.representativeTel.replace(/-/g, ''),
+  )
+  if (!representativeTelRequired)
+    representativeTelError += '・代表者電話番号を入力してください。\n'
+  if (
+    representativeTelRequired &&
+    !telRegex.test(formData.representativeTel.replace(/-/g, ''))
+  )
+    representativeTelError += '・代表者電話番号の形式が不正です。\n'
 
   if (
     nameError ||
@@ -49,7 +61,8 @@ exports.validate = function (formData) {
     postNumberError ||
     addressError ||
     addressAfterError ||
-    telError
+    telError ||
+    representativeTelError
   )
     passage = false
   const returnDatas = {
@@ -60,6 +73,7 @@ exports.validate = function (formData) {
     addressError: addressError,
     addressAfterError: addressAfterError,
     telError: telError,
+    representativeTelError: representativeTelError,
   }
   return returnDatas
 }

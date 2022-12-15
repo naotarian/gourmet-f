@@ -5,15 +5,14 @@ import WrapperGrid from '@/components/Parts/Atoms/Admin/WrapperGrid'
 import ContentsGrid from '@/components/Parts/Atoms/Admin/ContentsGrid'
 import TitleGrid from '@/components/Parts/Atoms/Admin/TitleGrid'
 import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
-import CardContent from '@mui/material/CardContent'
-import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import PropTypes from 'prop-types'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
+import Alert from '@mui/material/Alert'
+import AlertTitle from '@mui/material/AlertTitle'
+import Link from 'next/link'
 
 import { ActiveIdContext } from '@/pages/_app'
 const bull = (
@@ -50,11 +49,10 @@ TabPanel.propTypes = {
 }
 
 const information = props => {
-  // const restaurant = props.res.restaurant
-  // console.log(restaurant)
   const [open, setOpen] = useState(true)
   const ref = useRef(true)
   const [restaurant, setRestaurant] = useState(props.res.restaurant)
+  console.log(restaurant)
   const { activeIdCxt } = useContext(ActiveIdContext)
   const [tabNum, setTabNum] = useState(0)
 
@@ -67,6 +65,7 @@ const information = props => {
         ref.current = false
         return
       }
+      if (!restaurant) return
       if (restaurant.id !== activeIdCxt) {
         const res = await axios.get('/api/admin/restaurant/information')
         setRestaurant(res.data.restaurant)
@@ -81,7 +80,7 @@ const information = props => {
           <TitleGrid title="店舗情報" />
           <ContentsGrid>
             <Grid container spacing={2}>
-              {restaurant && (
+              {restaurant ? (
                 <>
                   <Box sx={{ width: '100%' }}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -103,6 +102,22 @@ const information = props => {
                       Item Three
                     </TabPanel>
                   </Box>
+                </>
+              ) : (
+                <>
+                  <Alert
+                    variant="filled"
+                    severity="warning"
+                    style={{ margin: '2rem auto' }}>
+                    <AlertTitle>店舗が登録されていません。</AlertTitle>
+
+                    <Typography variant="h6">
+                      <Link href="/admin/dashbord/restaurant/register">
+                        こちら
+                      </Link>
+                      から店舗を登録できます。
+                    </Typography>
+                  </Alert>
                 </>
               )}
             </Grid>

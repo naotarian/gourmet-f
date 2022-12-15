@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -23,6 +24,7 @@ import exportFunction from '@/components/functions/Admin/Restaurant/Register/fun
 
 const RegistRestaurant = props => {
   const { datas } = props
+  const router = useRouter()
   const mainCategories = datas.main_categories
   const subCategories = datas.sub_categories
   const budgets = datas.budgets
@@ -38,6 +40,7 @@ const RegistRestaurant = props => {
   const [address, setAddress] = useState('')
   const [addressAfter, setAddressAfter] = useState('')
   const [restaurantTel, setRestaurantTel] = useState('')
+  const [representativeTel, setRepresentativeTel] = useState('')
   const [sliderValue, setSliderValue] = useState(3)
   const [feature, setFeature] = useState('')
   //errors
@@ -48,6 +51,7 @@ const RegistRestaurant = props => {
   const [addressAfterErrors, setAddressAfterErrors] = useState('')
   const [telErrors, setTelErrors] = useState('')
   const [subCategoryErrors, setSubCategoryErrors] = useState('')
+  const [representativeTelErrors, setRepresentativeTelErrors] = useState('')
 
   const handleChange = event => {
     setCategories(event.target.value)
@@ -84,6 +88,7 @@ const RegistRestaurant = props => {
     setAddressAfterErrors('')
     setTelErrors('')
     setSubCategoryErrors('')
+    setRepresentativeTelErrors('')
     const formData = {
       restaurantName: restaurantName,
       restaurantEmail: restaurantEmail,
@@ -99,6 +104,7 @@ const RegistRestaurant = props => {
       sliderValue: sliderValue,
       takeOut: takeOut,
       feature: feature,
+      representativeTel: representativeTel,
     }
     const validate = await exportFunction.validate(formData)
     if (!validate.validate) {
@@ -162,9 +168,19 @@ const RegistRestaurant = props => {
           )),
         )
       }
+      if (validate.representativeTelError) {
+        setRepresentativeTelErrors(
+          validate.representativeTelError.split('\n').map((line, key) => (
+            <span key={key}>
+              {line}
+              <br />
+            </span>
+          )),
+        )
+      }
     } else {
       const res = await axios.post('/api/admin/restaurant/register', formData)
-      console.log(res)
+      router.push('/admin/dashbord/restaurant/list')
     }
   }
   return (
@@ -178,7 +194,7 @@ const RegistRestaurant = props => {
                 <TableCell style={{ border: '1px solid #ddd', width: '140px' }}>
                   店舗名
                 </TableCell>
-                <TableCell style={{ border: '1px solid #ddd' }} colSpan={2}>
+                <TableCell style={{ border: '1px solid #ddd' }}>
                   <TextField
                     error={nameErrors}
                     helperText={nameErrors}
@@ -192,7 +208,7 @@ const RegistRestaurant = props => {
                 <TableCell style={{ border: '1px solid #ddd', width: '100px' }}>
                   店舗メールアドレス
                 </TableCell>
-                <TableCell style={{ border: '1px solid #ddd' }} colSpan={2}>
+                <TableCell style={{ border: '1px solid #ddd' }} colSpan={3}>
                   <TextField
                     error={emailErrors}
                     helperText={emailErrors}
@@ -230,9 +246,8 @@ const RegistRestaurant = props => {
                   店舗所在地
                 </TableCell>
                 <TableCell
-                  style={{ border: '1px solid #f3f3f3' }}
-                  colSpan={3}
-                  style={{ maxWidth: '500px' }}>
+                  style={{ border: '1px solid #f3f3f3', maxWidth: '500px' }}
+                  colSpan={3}>
                   <Typography variant="small">
                     住所1(郵便番号から自動入力できます。)
                   </Typography>
@@ -260,7 +275,7 @@ const RegistRestaurant = props => {
               </TableRow>
               <TableRow
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <TableCell style={{ border: '1px solid #ddd', width: '140px' }}>
+                <TableCell style={{ border: '1px solid #ddd' }}>
                   店舗電話番号
                 </TableCell>
                 <TableCell style={{ border: '1px solid #ddd' }}>
@@ -274,11 +289,81 @@ const RegistRestaurant = props => {
                     onChange={e => setRestaurantTel(e.target.value)}
                   />
                 </TableCell>
+                <TableCell style={{ border: '1px solid #ddd', width: '140px' }}>
+                  代表者電話番号
+                </TableCell>
+                <TableCell style={{ border: '1px solid #ddd' }} colSpan={3}>
+                  <TextField
+                    error={representativeTelErrors}
+                    helperText={representativeTelErrors}
+                    placeholder="例)09000000000"
+                    size="small"
+                    fullWidth
+                    value={representativeTel}
+                    onChange={e => setRepresentativeTel(e.target.value)}
+                  />
+                </TableCell>
+              </TableRow>
+              <TableRow
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell
+                  style={{ border: '1px solid #ddd', minWidth: '120px' }}>
+                  予算
+                </TableCell>
+                <TableCell style={{ border: '1px solid #ddd' }}>
+                  <FormControl sx={{ m: 1 }} size="small">
+                    <Typography variant="small">
+                      ランチタイムの予算を選択してください。
+                    </Typography>
+                    <Select
+                      labelId="demo-select-small"
+                      id="demo-select-small"
+                      value={lunchBudget}
+                      onChange={lunchBudgetChange}>
+                      {budgets.map((data, index) => (
+                        <MenuItem value={data.id} key={index}>
+                          {data.price}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                    <Typography variant="small">
+                      ディナータイムの予算を入力してください。
+                    </Typography>
+                    <Select value={dinnerBudget} onChange={dinnerBudgetChange}>
+                      {budgets.map((data, index) => (
+                        <MenuItem value={data.id} key={index}>
+                          {data.price}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </TableCell>
+                <TableCell style={{ border: '1px solid #ddd', width: '140px' }}>
+                  店舗の雰囲気
+                </TableCell>
+                <TableCell style={{ border: '1px solid #ddd' }} colSpan={3}>
+                  <span>落ち着いた</span>
+                  <span style={{ float: 'right' }}>にぎやか</span>
+                  <Slider
+                    value={sliderValue}
+                    valueLabelDisplay="auto"
+                    step={1}
+                    marks
+                    min={1}
+                    max={5}
+                    onChange={sliderChange}
+                  />
+                </TableCell>
+              </TableRow>
+              <TableRow
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell
                   style={{ border: '1px solid #ddd', minWidth: '120px' }}>
                   カテゴリー
                 </TableCell>
-                <TableCell style={{ border: '1px solid #ddd', width: '100px' }}>
+                <TableCell style={{ border: '1px solid #ddd' }}>
                   <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
                     <Typography variant="small">
                       大カテゴリーを選択してください。
@@ -337,59 +422,6 @@ const RegistRestaurant = props => {
                       <MenuItem value={8}>祝日</MenuItem>
                       <MenuItem value={9}>年中無休</MenuItem>
                       <MenuItem value={10}>不定休</MenuItem>
-                    </Select>
-                  </FormControl>
-                </TableCell>
-              </TableRow>
-              <TableRow
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <TableCell style={{ border: '1px solid #ddd', width: '140px' }}>
-                  店舗の雰囲気
-                </TableCell>
-                <TableCell style={{ border: '1px solid #ddd' }}>
-                  <span>落ち着いた</span>
-                  <span style={{ float: 'right' }}>にぎやか</span>
-                  <Slider
-                    value={sliderValue}
-                    valueLabelDisplay="auto"
-                    step={1}
-                    marks
-                    min={1}
-                    max={5}
-                    onChange={sliderChange}
-                  />
-                </TableCell>
-                <TableCell
-                  style={{ border: '1px solid #ddd', minWidth: '120px' }}>
-                  予算
-                </TableCell>
-                <TableCell style={{ border: '1px solid #ddd', width: '100px' }}>
-                  <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                    <Typography variant="small">
-                      ランチタイムの予算を選択してください。
-                    </Typography>
-                    <Select
-                      labelId="demo-select-small"
-                      id="demo-select-small"
-                      value={lunchBudget}
-                      onChange={lunchBudgetChange}>
-                      {budgets.map((data, index) => (
-                        <MenuItem value={data.id} key={index}>
-                          {data.price}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                  <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                    <Typography variant="small">
-                      ディナータイムの予算を入力してください。
-                    </Typography>
-                    <Select value={dinnerBudget} onChange={dinnerBudgetChange}>
-                      {budgets.map((data, index) => (
-                        <MenuItem value={data.id} key={index}>
-                          {data.price}
-                        </MenuItem>
-                      ))}
                     </Select>
                   </FormControl>
                 </TableCell>
