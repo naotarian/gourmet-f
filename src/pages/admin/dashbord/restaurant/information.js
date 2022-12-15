@@ -11,6 +11,10 @@ import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
+import PropTypes from 'prop-types'
+import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab'
+
 import { ActiveIdContext } from '@/pages/_app'
 const bull = (
   <Box
@@ -19,6 +23,32 @@ const bull = (
     •
   </Box>
 )
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}>
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  )
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+}
+
 const information = props => {
   // const restaurant = props.res.restaurant
   // console.log(restaurant)
@@ -26,6 +56,11 @@ const information = props => {
   const ref = useRef(true)
   const [restaurant, setRestaurant] = useState(props.res.restaurant)
   const { activeIdCxt } = useContext(ActiveIdContext)
+  const [tabNum, setTabNum] = useState(0)
+
+  const TabChange = (event, newValue) => {
+    setTabNum(newValue)
+  }
   useEffect(() => {
     ;(async () => {
       if (ref.current) {
@@ -48,15 +83,26 @@ const information = props => {
             <Grid container spacing={2}>
               {restaurant && (
                 <>
-                  <Grid item xs={4}>
-                    <Card sx={{ maxWidth: 400, cursor: 'pointer' }}>
-                      <CardContent>
-                        <Typography variant="h5" component="div">
-                          {restaurant.restaurant_name}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </Grid>
+                  <Box sx={{ width: '100%' }}>
+                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                      <Tabs
+                        value={tabNum}
+                        onChange={TabChange}
+                        aria-label="basic tabs example">
+                        <Tab label="基本設定" />
+                        <Tab label="通知設定" />
+                      </Tabs>
+                    </Box>
+                    <TabPanel value={tabNum} index={0}>
+                      Item One
+                    </TabPanel>
+                    <TabPanel value={tabNum} index={1}>
+                      Item Two
+                    </TabPanel>
+                    <TabPanel value={tabNum} index={2}>
+                      Item Three
+                    </TabPanel>
+                  </Box>
                 </>
               )}
             </Grid>
