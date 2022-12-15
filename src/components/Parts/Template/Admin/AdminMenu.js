@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import axios from '@/lib/axios'
 import { styled, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
@@ -32,6 +32,7 @@ import Select from '@mui/material/Select'
 
 import { useRouter } from 'next/router'
 import { useAuth } from '@/hooks/authAdmin'
+import { ActiveIdContext } from '@/pages/_app'
 
 const drawerWidth = 240
 
@@ -61,13 +62,16 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }))
 
 const AdminMenu = props => {
+  const { activeIdCxt, setActiveIdCxt } = useContext(ActiveIdContext)
+  const user = useAuth({ middleware: 'guest' }).user
   const theme = useTheme()
   const router = useRouter()
   const { logout } = useAuth()
   const { open, setOpen } = props
   const [expanded, setExpanded] = useState([])
   const [restaurants, setRestaurants] = useState([])
-  const [age, setAge] = useState('')
+  const [activeId, setActiveId] = useState(null)
+  const [activeIdState, setActiveIdState] = useState()
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false)
     setExpanded(
@@ -79,14 +83,14 @@ const AdminMenu = props => {
   useEffect(() => {
     ;(async () => {
       try {
-        const res = await axios.get('/api/admin/user')
-        if (!res.data) router.push('/admin/login')
         const initialize = await axios.get('/api/admin/restaurant/initialize')
+        // console.log(initialize.data)
         setRestaurants(initialize.data.restaurants)
-        console.log(initialize.data.active_restaurant_id)
-        setAge(initialize.data.active_restaurant_id)
+        setActiveIdState(initialize.data.active_restaurant_id)
+        setActiveId(initialize.data.active_restaurant_id)
+        setActiveIdCxt(initialize.data.active_restaurant_id)
       } catch (error) {
-        router.push('/admin/login')
+        // router.push('/admin/login')
       }
     })()
   }, [])
@@ -102,7 +106,16 @@ const AdminMenu = props => {
   }
 
   const restaurantChange = event => {
-    setAge(event.target.value)
+    setActiveIdState(event.target.value)
+  }
+
+  const displayChange = async changeActiveId => {
+    const res = await axios.post('/api/admin/restaurant/display_change', {
+      id: activeIdState,
+    })
+    setActiveId(res.data.newSession)
+    // changeActiveId(res.data.newSession)
+    setActiveIdCxt(res.data.newSession)
   }
 
   return (
@@ -118,21 +131,22 @@ const AdminMenu = props => {
             sx={{ mr: 2, ...(open && { display: 'none' }) }}>
             <MenuIcon />
           </IconButton>
-          {age && restaurants.length > 0 && (
+          {user && <Typography variant="h6">{user.name}</Typography>}
+          {activeIdState && restaurants.length > 0 && (
             <Typography variant="h6" noWrap component="div">
               {restaurants.map((data, index) => {
-                if (data.id === age) {
+                if (data.id === activeId) {
                   return <>{data.restaurant_name}様</>
                 }
               })}
             </Typography>
           )}
-          {age && restaurants.length > 1 && (
+          {activeIdState && restaurants.length > 1 && (
             <Grid style={{ position: 'absolute', right: '100px' }}>
               <Grid style={{ display: 'flex', alignItems: 'baseline' }}>
                 <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
                   <Select
-                    value={age}
+                    value={activeIdState}
                     style={{ background: '#fff' }}
                     onChange={restaurantChange}>
                     {restaurants.map((data, index) => (
@@ -142,7 +156,11 @@ const AdminMenu = props => {
                     ))}
                   </Select>
                 </FormControl>
-                <Button size="small" variant="outlined" color="secondary">
+                <Button
+                  size="small"
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => displayChange()}>
                   切り替え
                 </Button>
               </Grid>
@@ -254,7 +272,9 @@ const menus = [
   },
   {
     name: '基本情報',
-    sub: [{ name: '営業情報', path: '/admin/dashbord/salesInformation' }],
+    sub: [
+      { name: '店舗基本情報', path: '/admin/dashbord/restaurant/information' },
+    ],
   },
   {
     name: 'スタッフ管理',
