@@ -207,7 +207,7 @@ const AdminMenu = props => {
                       paddingLeft: 0,
                       maxHeight: '40px',
                     }}>
-                    <ListItem key={text} disablePadding>
+                    <ListItem disablePadding>
                       <ListItemButton>
                         <ListItemIcon>
                           {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}

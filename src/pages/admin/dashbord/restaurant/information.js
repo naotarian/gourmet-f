@@ -12,17 +12,16 @@ import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
+import Button from '@mui/material/Button'
 import Link from 'next/link'
+import InformationEdit from '@/components/Parts/Organisms/Admin/Restaurant/InformationEdit'
+import styled from 'styled-components'
 
 import { ActiveIdContext } from '@/pages/_app'
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}>
-    •
-  </Box>
-)
-
+const ButtonArea = styled(Grid)`
+  margin: 2rem auto;
+  text-align: center;
+`
 function TabPanel(props) {
   const { children, value, index, ...other } = props
 
@@ -93,7 +92,10 @@ const information = props => {
                       </Tabs>
                     </Box>
                     <TabPanel value={tabNum} index={0}>
-                      Item One
+                      <InformationEdit
+                        restaurant={restaurant}
+                        setRestaurant={setRestaurant}
+                      />
                     </TabPanel>
                     <TabPanel value={tabNum} index={1}>
                       Item Two
@@ -121,6 +123,9 @@ const information = props => {
                 </>
               )}
             </Grid>
+            <ButtonArea>
+              <Button variant="contained">更新</Button>
+            </ButtonArea>
           </ContentsGrid>
         </WrapperGrid>
       </>
