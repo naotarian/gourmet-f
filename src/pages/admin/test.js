@@ -1,0 +1,119 @@
+import { useState, useCallback } from 'react'
+import Grid from '@mui/material/Grid'
+import Cropper from 'react-easy-crop'
+const CROP_AREA_ASPECT = 1 / 1
+const Output = ({ croppedArea, file }) => {
+  const scale = 100 / croppedArea.width
+  const transform = {
+    x: `${-croppedArea.x * scale}%`,
+    y: `${-croppedArea.y * scale}%`,
+    scale,
+    width: 'calc(100% + 0.5px)',
+    height: 'auto',
+  }
+
+  const imageStyle = {
+    transform: `translate3d(${transform.x}, ${transform.y}, 0) scale3d(${transform.scale},${transform.scale},1)`,
+    width: transform.width,
+    height: transform.height,
+  }
+  const imageStyleOut = {
+    transform: `translate3d(${transform.x}, ${transform.y}, 0) scale3d(${transform.scale},${transform.scale},1)`,
+    width: transform.width,
+    height: transform.height,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    transformOrigin: 'top left',
+  }
+
+  return (
+    <div
+      className="output"
+      style={{
+        paddingBottom: 0,
+        // paddingBottom: `${100 / CROP_AREA_ASPECT}%`,
+        position: 'relative',
+        width: '300px',
+        height: '300px',
+        overflow: 'hidden',
+        boxShadow: '0 0 32px rgba(0, 0, 0, 0.3)',
+      }}>
+      <img src={file} alt="" style={imageStyleOut} />
+    </div>
+  )
+}
+const test = () => {
+  const [file, setImage] = useState()
+  const [crop, setCrop] = useState({ x: 0, y: 0 })
+  const [zoom, setZoom] = useState(1)
+  const [croppedArea, setCroppedArea] = useState(null)
+  // const onChangeHandler = useCallback(e => {
+  //   // ファイル選択がキャンセルされた時は undefined
+  //   const image = e.target.files[0]
+  //   setImage(() => {
+  //     console.log(image)
+  //     return image ? image : null
+  //   })
+  // }, [])
+  const onChangeHandler = event => {
+    setImage(undefined)
+    if (event.target.files?.length === 0) {
+      return
+    }
+    if (!event.target.files?.[0].type.match('image.*')) {
+      return
+    }
+    const reader = new FileReader()
+    reader.onload = e => {
+      setImage(e.target?.result)
+    }
+    reader.readAsDataURL(event.target?.files[0])
+  }
+  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+    console.log(croppedArea, croppedAreaPixels)
+  }, [])
+
+  return (
+    <>
+      <input
+        type="file"
+        accept="image/jpeg,image/png"
+        onChange={onChangeHandler}
+      />
+      <p>test</p>
+      <Grid style={{ position: 'relative', height: '50vh' }}>
+        aaaa
+        {file && (
+          <Cropper
+            image={file}
+            crop={crop}
+            zoom={zoom}
+            aspect={1 / 1}
+            onCropChange={setCrop}
+            onCropComplete={onCropComplete}
+            onZoomChange={setZoom}
+            onCropAreaChange={croppedArea => {
+              setCroppedArea(croppedArea)
+            }}
+          />
+        )}
+      </Grid>
+      <Grid
+        style={
+          {
+            // marginTop: '2rem',
+            // height: '50vh',
+            // display: 'flex',
+            // alignItems: 'center',
+            // justifyContent: 'center',
+          }
+        }>
+        {croppedArea && file && (
+          <Output croppedArea={croppedArea} file={file} />
+        )}
+      </Grid>
+    </>
+  )
+}
+export default test
