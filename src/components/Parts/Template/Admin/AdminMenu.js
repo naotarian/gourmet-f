@@ -296,7 +296,7 @@ const menus = [
   },
   {
     name: '予約管理',
-    sub: [{ name: '予約状況', path: '/admin/dashbord/salesInformation' }],
+    sub: [{ name: '予約状況', path: '/admin/dashbord/restaurant/reserve' }],
   },
   {
     name: '施設管理',
