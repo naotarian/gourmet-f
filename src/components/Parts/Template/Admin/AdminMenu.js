@@ -64,6 +64,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const AdminMenu = props => {
   const { activeIdCxt, setActiveIdCxt } = useContext(ActiveIdContext)
   const user = useAuth({ middleware: 'guest' }).user
+  console.log(user)
   const theme = useTheme()
   const router = useRouter()
   const { logout } = useAuth()
@@ -285,7 +286,7 @@ const menus = [
   },
   {
     name: '予約管理',
-    sub: [{ name: '予約状況', path: '/admin/dashbord/salesInformation' }],
+    sub: [{ name: '予約状況', path: '/admin/dashbord/restaurant/reserve' }],
   },
   {
     name: '施設管理',

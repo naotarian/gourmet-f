@@ -12,7 +12,6 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
       .then(res => res.data)
       .catch(error => {
         if (error.response.status != 409) return false
-
         router.push('/admin/verify-email')
       }),
   )

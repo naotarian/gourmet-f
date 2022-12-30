@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react'
 import Grid from '@mui/material/Grid'
+import Button from '@mui/material/Button'
+import axios from '@/lib/axios'
 import Cropper from 'react-easy-crop'
 const CROP_AREA_ASPECT = 1 / 1
 const Output = ({ croppedArea, file }) => {
@@ -41,6 +43,7 @@ const Output = ({ croppedArea, file }) => {
 const test = () => {
   const [file, setImage] = useState()
   const [crop, setCrop] = useState({ x: 0, y: 0 })
+  const [backCrop, setBackCrop] = useState(null)
   const [zoom, setZoom] = useState(1)
   const [croppedArea, setCroppedArea] = useState(null)
   const onChangeHandler = event => {
@@ -59,7 +62,13 @@ const test = () => {
   }
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     console.log(croppedArea, croppedAreaPixels)
+    setBackCrop(croppedAreaPixels)
   }, [])
+
+  const submit = async () => {
+    const sendData = { file: file, backCrop: backCrop }
+    const res = await axios.post('/api/admin/imageUpload', sendData)
+  }
 
   return (
     <>
@@ -70,13 +79,12 @@ const test = () => {
       />
       <p>test</p>
       <Grid style={{ position: 'relative', height: '50vh' }}>
-        aaaa
         {file && (
           <Cropper
             image={file}
             crop={crop}
             zoom={zoom}
-            aspect={1 / 1}
+            aspect={5 / 2}
             showGrid={false}
             zoomSpeed={1}
             restrictPosition={true}
@@ -96,6 +104,9 @@ const test = () => {
           <Output croppedArea={croppedArea} file={file} />
         )}
       </Grid>
+      <Button variant="contained" onClick={submit}>
+        送信
+      </Button>
     </>
   )
 }
