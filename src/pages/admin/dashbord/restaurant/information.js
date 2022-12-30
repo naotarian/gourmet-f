@@ -1,9 +1,9 @@
 import axios from '@/lib/axios'
 import { useState, useEffect, useContext, useRef } from 'react'
-import AdminMenu from '@/components/Parts/Template/Admin/AdminMenu'
-import WrapperGrid from '@/components/Parts/Atoms/Admin/WrapperGrid'
-import ContentsGrid from '@/components/Parts/Atoms/Admin/ContentsGrid'
-import TitleGrid from '@/components/Parts/Atoms/Admin/TitleGrid'
+//components
+import InformationEdit from '@/components/Parts/Organisms/Admin/Restaurant/InformationEdit'
+import PageTemplate from '@/components/Parts/Template/Admin/PageTemplate'
+//mui
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
@@ -13,9 +13,10 @@ import Tab from '@mui/material/Tab'
 import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
 import Button from '@mui/material/Button'
-import Link from 'next/link'
-import InformationEdit from '@/components/Parts/Organisms/Admin/Restaurant/InformationEdit'
+//style
 import styled from 'styled-components'
+//next
+import Link from 'next/link'
 
 import { ActiveIdContext } from '@/pages/_app'
 const ButtonArea = styled(Grid)`
@@ -74,60 +75,56 @@ const information = props => {
   return (
     <>
       <>
-        <AdminMenu open={open} setOpen={setOpen} />
-        <WrapperGrid open={open}>
-          <TitleGrid title="店舗情報" />
-          <ContentsGrid>
-            <Grid container spacing={2}>
-              {restaurant ? (
-                <>
-                  <Box sx={{ width: '100%' }}>
-                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                      <Tabs
-                        value={tabNum}
-                        onChange={TabChange}
-                        aria-label="basic tabs example">
-                        <Tab label="基本設定" />
-                        <Tab label="通知設定" />
-                      </Tabs>
-                    </Box>
-                    <TabPanel value={tabNum} index={0}>
-                      <InformationEdit
-                        restaurant={restaurant}
-                        setRestaurant={setRestaurant}
-                      />
-                    </TabPanel>
-                    <TabPanel value={tabNum} index={1}>
-                      Item Two
-                    </TabPanel>
-                    <TabPanel value={tabNum} index={2}>
-                      Item Three
-                    </TabPanel>
+        <PageTemplate open={open} setOpen={setOpen} title="店舗情報">
+          <Grid container spacing={2}>
+            {restaurant ? (
+              <>
+                <Box sx={{ width: '100%' }}>
+                  <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    <Tabs
+                      value={tabNum}
+                      onChange={TabChange}
+                      aria-label="basic tabs example">
+                      <Tab label="基本設定" />
+                      <Tab label="通知設定" />
+                    </Tabs>
                   </Box>
-                </>
-              ) : (
-                <>
-                  <Alert
-                    variant="filled"
-                    severity="warning"
-                    style={{ margin: '2rem auto' }}>
-                    <AlertTitle>店舗が登録されていません。</AlertTitle>
+                  <TabPanel value={tabNum} index={0}>
+                    <InformationEdit
+                      restaurant={restaurant}
+                      setRestaurant={setRestaurant}
+                    />
+                  </TabPanel>
+                  <TabPanel value={tabNum} index={1}>
+                    Item Two
+                  </TabPanel>
+                  <TabPanel value={tabNum} index={2}>
+                    Item Three
+                  </TabPanel>
+                </Box>
+              </>
+            ) : (
+              <>
+                <Alert
+                  variant="filled"
+                  severity="warning"
+                  style={{ margin: '2rem auto' }}>
+                  <AlertTitle>店舗が登録されていません。</AlertTitle>
 
-                    <Typography variant="h6">
-                      <Link href="/admin/dashbord/restaurant/register">
-                        こちら
-                      </Link>
-                      から店舗を登録できます。
-                    </Typography>
-                  </Alert>
-                </>
-              )}
-            </Grid>
-            <ButtonArea>
-              <Button variant="contained">更新</Button>
-            </ButtonArea>
-          </ContentsGrid>
-        </WrapperGrid>
+                  <Typography variant="h6">
+                    <Link href="/admin/dashbord/restaurant/register">
+                      こちら
+                    </Link>
+                    から店舗を登録できます。
+                  </Typography>
+                </Alert>
+              </>
+            )}
+          </Grid>
+          <ButtonArea>
+            <Button variant="contained">更新</Button>
+          </ButtonArea>
+        </PageTemplate>
       </>
     </>
   )

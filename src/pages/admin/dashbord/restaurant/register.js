@@ -1,26 +1,16 @@
 import axios from '@/lib/axios'
 import { useState } from 'react'
-import { useRouter } from 'next/router'
-import AdminMenu from '@/components/Parts/Template/Admin/AdminMenu'
-import WrapperGrid from '@/components/Parts/Atoms/Admin/WrapperGrid'
-import ContentsGrid from '@/components/Parts/Atoms/Admin/ContentsGrid'
-import TitleGrid from '@/components/Parts/Atoms/Admin/TitleGrid'
+import PageTemplate from '@/components/Parts/Template/Admin/PageTemplate'
 import RegistRestaurant from '@/components/Parts/Organisms/Admin/RegistRestaurant'
 const register = props => {
   const datas = props.res
-  const router = useRouter()
-
   const [open, setOpen] = useState(true)
 
   return (
     <>
-      <AdminMenu open={open} setOpen={setOpen} />
-      <WrapperGrid open={open}>
-        <TitleGrid title="店舗登録" />
-        <ContentsGrid>
-          <RegistRestaurant datas={datas} />
-        </ContentsGrid>
-      </WrapperGrid>
+      <PageTemplate open={open} setOpen={setOpen} title="店舗登録">
+        <RegistRestaurant datas={datas} />
+      </PageTemplate>
     </>
   )
 }

@@ -1,10 +1,7 @@
 import axios from '@/lib/axios'
 import { useState, useEffect, useContext, useRef } from 'react'
-import AdminMenu from '@/components/Parts/Template/Admin/AdminMenu'
-import WrapperGrid from '@/components/Parts/Atoms/Admin/WrapperGrid'
-import ContentsGrid from '@/components/Parts/Atoms/Admin/ContentsGrid'
-import TitleGrid from '@/components/Parts/Atoms/Admin/TitleGrid'
 import Card from '@mui/material/Card'
+import PageTemplate from '@/components/Parts/Template/Admin/PageTemplate'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
@@ -32,60 +29,54 @@ const list = props => {
   }, [activeIdCxt])
   return (
     <>
-      <AdminMenu open={open} setOpen={setOpen} />
-      <WrapperGrid open={open}>
-        <TitleGrid title="店舗一覧" />
-        <ContentsGrid>
-          <Grid container spacing={2}>
-            {restaurantList.restaurants.length > 0 ? (
-              <>
-                {restaurantList.restaurants.map((data, index) => (
-                  <Grid item xs={4} key={index}>
-                    <Card sx={{ maxWidth: 400, cursor: 'pointer' }}>
-                      <CardContent>
-                        {data.id === restaurantList.active_restaurant_id ? (
-                          <Typography
-                            sx={{ fontSize: 14 }}
-                            color="text.secondary"
-                            gutterBottom>
-                            この店舗を選択中
-                          </Typography>
-                        ) : (
-                          <Typography
-                            sx={{ fontSize: 14 }}
-                            color="text.secondary"
-                            gutterBottom>
-                            未選択
-                          </Typography>
-                        )}
-                        <Typography variant="h5" component="div">
-                          {data.restaurant_name}
+      <PageTemplate open={open} setOpen={setOpen} title="店舗一覧">
+        <Grid container spacing={2}>
+          {restaurantList.restaurants.length > 0 ? (
+            <>
+              {restaurantList.restaurants.map((data, index) => (
+                <Grid item xs={4} key={index}>
+                  <Card sx={{ maxWidth: 400, cursor: 'pointer' }}>
+                    <CardContent>
+                      {data.id === restaurantList.active_restaurant_id ? (
+                        <Typography
+                          sx={{ fontSize: 14 }}
+                          color="text.secondary"
+                          gutterBottom>
+                          この店舗を選択中
                         </Typography>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                ))}
-              </>
-            ) : (
-              <>
-                <Alert
-                  variant="filled"
-                  severity="warning"
-                  style={{ margin: '2rem auto' }}>
-                  <AlertTitle>店舗が登録されていません。</AlertTitle>
+                      ) : (
+                        <Typography
+                          sx={{ fontSize: 14 }}
+                          color="text.secondary"
+                          gutterBottom>
+                          未選択
+                        </Typography>
+                      )}
+                      <Typography variant="h5" component="div">
+                        {data.restaurant_name}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </>
+          ) : (
+            <>
+              <Alert
+                variant="filled"
+                severity="warning"
+                style={{ margin: '2rem auto' }}>
+                <AlertTitle>店舗が登録されていません。</AlertTitle>
 
-                  <Typography variant="h6">
-                    <Link href="/admin/dashbord/restaurant/register">
-                      こちら
-                    </Link>
-                    から店舗を登録できます。
-                  </Typography>
-                </Alert>
-              </>
-            )}
-          </Grid>
-        </ContentsGrid>
-      </WrapperGrid>
+                <Typography variant="h6">
+                  <Link href="/admin/dashbord/restaurant/register">こちら</Link>
+                  から店舗を登録できます。
+                </Typography>
+              </Alert>
+            </>
+          )}
+        </Grid>
+      </PageTemplate>
     </>
   )
 }

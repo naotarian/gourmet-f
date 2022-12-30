@@ -63,7 +63,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const AdminMenu = props => {
   const { activeIdCxt, setActiveIdCxt } = useContext(ActiveIdContext)
-  const user = useAuth({ middleware: 'guest' }).user
+  const user = useAuth({ middleware: 'admin' }).user
   const theme = useTheme()
   const router = useRouter()
   const { logout } = useAuth()
@@ -84,13 +84,12 @@ const AdminMenu = props => {
     ;(async () => {
       try {
         const initialize = await axios.get('/api/admin/restaurant/initialize')
-        // console.log(initialize.data)
         setRestaurants(initialize.data.restaurants)
         setActiveIdState(initialize.data.active_restaurant_id)
         setActiveId(initialize.data.active_restaurant_id)
         setActiveIdCxt(initialize.data.active_restaurant_id)
       } catch (error) {
-        // router.push('/admin/login')
+        router.push('/admin/login')
       }
     })()
   }, [])
@@ -215,26 +214,33 @@ const AdminMenu = props => {
                         <ListItemText primary={text.name} />
                       </ListItemButton>
                     </ListItem>
+                    <Divider />
                   </AccordionSummary>
                   <AccordionDetails style={{ padding: 0 }}>
                     <List>
                       {text.sub.map((text, index) => (
-                        <ListItem key={index} disablePadding>
-                          <ListItemButton onClick={() => menuClick(text.path)}>
-                            <ListItemIcon>
-                              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                            </ListItemIcon>
-                            <ListItemText primary={text.name} />
-                          </ListItemButton>
-                        </ListItem>
+                        <>
+                          <Divider />
+                          <ListItem key={index} disablePadding>
+                            <ListItemButton
+                              onClick={() => menuClick(text.path)}>
+                              <ListItemIcon>
+                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                              </ListItemIcon>
+                              <ListItemText primary={text.name} />
+                            </ListItemButton>
+                          </ListItem>
+                        </>
                       ))}
                     </List>
+                    <Divider />
                   </AccordionDetails>
                 </Accordion>
               )
             } else {
               return (
                 <>
+                  <Divider />
                   <ListItem key={text} disablePadding>
                     <ListItemButton onClick={() => menuClick(text.path)}>
                       <ListItemIcon>
@@ -275,6 +281,11 @@ const menus = [
     sub: [
       { name: '店舗基本情報', path: '/admin/dashbord/restaurant/information' },
     ],
+  },
+  {
+    name: 'ポータルサイト',
+    sub: [],
+    path: '/admin/dashbord/portal',
   },
   {
     name: 'スタッフ管理',
