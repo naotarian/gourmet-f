@@ -2,6 +2,7 @@ import axios from '@/lib/axios'
 import { useState, useEffect, useContext, useRef } from 'react'
 //components
 import PageTemplate from '@/components/Parts/Template/Admin/PageTemplate'
+import TabTop from '@/components/Parts/Organisms/Admin/Portal/TabTop'
 //mui
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
@@ -9,7 +10,6 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import OutlinedInput from '@mui/material/OutlinedInput'
-import ReactCrop from 'react-image-crop'
 function TabPanel(props) {
   const { children, value, index, ...other } = props
 
@@ -69,22 +69,7 @@ const index = () => {
         </Box>
         <TabPanel value={tabNum} index={0}>
           <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={4}>
-                <Typography variant="h6">フォトギャラリー設定</Typography>
-              </Grid>
-              <Grid item xs={8}>
-                <input
-                  accept="image/*"
-                  multiple
-                  type="file"
-                  onChange={fileChange}
-                />
-                <ReactCrop crop={crop} onChange={c => setCrop(c)}>
-                  <img src={src} />
-                </ReactCrop>
-              </Grid>
-            </Grid>
+            <TabTop />
           </Box>
         </TabPanel>
         <TabPanel value={tabNum} index={1}>
