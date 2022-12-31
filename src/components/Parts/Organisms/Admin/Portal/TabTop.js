@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
@@ -8,14 +8,17 @@ import { Backdrop } from '@mui/material'
 const CROP_AREA_ASPECT = 1 / 1
 const TabTop = () => {
   const [file, setImage] = useState([null, null, null, null, null])
-  const [crop1, setCrop1] = useState({ x: 0, y: 0 })
-  const [crop2, setCrop2] = useState({ x: 0, y: 0 })
-  const [backCrop1, setBackCrop1] = useState(null)
-  const [backCrop2, setBackCrop2] = useState(null)
-  const [zoom1, setZoom1] = useState(1)
-  const [zoom2, setZoom2] = useState(1)
-  const [croppedArea1, setCroppedArea1] = useState(null)
-  const [croppedArea2, setCroppedArea2] = useState(null)
+  const [crop, setCrop] = useState([
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+  ])
+  const [backCrop, setBackCrop] = useState([null, null, null, null, null])
+  const [zoom, setZoom] = useState([1, 1, 1, 1, 1])
+  const [croppedArea, setCroppedArea] = useState(null)
+  const ref = useRef(null)
   const onChangeHandler = (event, num) => {
     // setImage(undefined)
     if (event.target.files?.length === 0) {
@@ -31,18 +34,31 @@ const TabTop = () => {
     }
     reader.readAsDataURL(event.target?.files[0])
   }
-  const onCropComplete1 = useCallback((croppedArea, croppedAreaPixels) => {
-    setBackCrop1(croppedAreaPixels)
-  }, [])
-  const onCropComplete2 = useCallback((croppedArea, croppedAreaPixels) => {
-    setBackCrop2(croppedAreaPixels)
+  const onCropComplete = useCallback((croppedArea, croppedAreaPixels, num) => {
+    setBackCrop(prevState =>
+      prevState.map((obj, index) => (index === num ? croppedAreaPixels : obj)),
+    )
+    // setBackCrop(croppedAreaPixels)
   }, [])
 
+  const changeCrop = (cropVal, num) => {
+    setCrop(prevState =>
+      prevState.map((obj, index) => (index === num ? cropVal : obj)),
+    )
+  }
+
+  const changeZoom = (val, num) => {
+    setZoom(prevState =>
+      prevState.map((obj, index) => (index === num ? val : obj)),
+    )
+  }
+
   const submit = async () => {
-    const backCrop = [backCrop1, backCrop2]
     const sendData = { file: file, backCrop: backCrop }
     const res = await axios.post('/api/admin/imageUpload', sendData)
     setImage([null, null, null, null, null])
+    ref.current.value = ''
+    console.log(ref.current.value)
   }
 
   return (
@@ -51,7 +67,7 @@ const TabTop = () => {
         <Grid item xs={4}>
           <Typography variant="h6">フォトギャラリー設定</Typography>
         </Grid>
-        <Grid item xs={8}>
+        {/* <Grid item xs={8}>
           <input
             type="file"
             accept="image/jpeg,image/png"
@@ -62,14 +78,16 @@ const TabTop = () => {
             {file[0] && (
               <Cropper
                 image={file[0]}
-                crop={crop1}
+                crop={crop[0]}
                 zoom={zoom1}
                 aspect={5 / 2}
                 showGrid={false}
                 zoomSpeed={1}
                 restrictPosition={true}
                 maxZoom={2}
-                onCropChange={setCrop1}
+                onCropChange={(a, b) => {
+                  console.log(a)
+                }}
                 zoomWithScroll={1}
                 onCropComplete={onCropComplete1}
                 onZoomChange={setZoom1}
@@ -108,7 +126,51 @@ const TabTop = () => {
               />
             )}
           </Grid>
-        </Grid>
+        </Grid> */}
+        {file.map((f, index) => {
+          return (
+            <Grid item xs={8}>
+              <input
+                type="file"
+                accept="image/jpeg,image/png"
+                onChange={e => onChangeHandler(e, index)}
+                ref={ref}
+              />
+              <Grid
+                style={{
+                  position: 'relative',
+                  height: '25vh',
+                  marginTop: '2rem',
+                }}>
+                {f && (
+                  <Cropper
+                    image={f}
+                    crop={crop[index]}
+                    zoom={zoom[index]}
+                    aspect={5 / 2}
+                    showGrid={false}
+                    zoomSpeed={1}
+                    restrictPosition={true}
+                    maxZoom={2}
+                    onCropChange={(cropVal, b) => {
+                      changeCrop(cropVal, index)
+                    }}
+                    zoomWithScroll={1}
+                    onCropComplete={(cropped, croppedAreaPixels) => {
+                      onCropComplete(cropped, croppedAreaPixels, index)
+                    }}
+                    onZoomChange={val => {
+                      changeZoom(val, index)
+                    }}
+                    onCropAreaChange={croppedArea => {
+                      setCroppedArea(croppedArea)
+                    }}
+                  />
+                )}
+              </Grid>
+            </Grid>
+          )
+        })}
       </Grid>
 
       <Button variant="contained" onClick={submit}>
