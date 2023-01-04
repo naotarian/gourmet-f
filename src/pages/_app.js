@@ -4,6 +4,7 @@ import themeAdmin from '../components/defaultAdmin'
 import { ThemeProvider } from '@mui/material/styles'
 import { useRouter } from 'next/router'
 import React, { createContext, useState } from 'react'
+import 'modern-css-reset/dist/reset.min.css'
 export const LoginCheck = createContext()
 export const ActiveIdContext = createContext(null)
 const App = ({ Component, pageProps }) => {

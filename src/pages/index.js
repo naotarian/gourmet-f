@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
-import Header from '../components/Parts/Template/Header'
+import FirstView from '@/components/Parts/Organisms/Portal/FirstView'
+import PageTemplate from '@/components/Parts/Template/Portal/PageTemplate'
 
 export default function Home() {
   return (
@@ -17,10 +18,12 @@ export default function Home() {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-      <Header />
-      <Link href="/result/result_list">
-        <a>一覧</a>
-      </Link>
+      <PageTemplate>
+        <FirstView />
+        <Link href="/result/result_list">
+          <a>一覧</a>
+        </Link>
+      </PageTemplate>
     </>
   )
 }
