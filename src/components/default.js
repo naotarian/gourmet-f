@@ -46,6 +46,16 @@ const theme = createTheme({
       lineHeight: 2,
       fontWeight: 700,
     },
+    h5: {
+      fontSize: 14,
+      lineHeight: 1,
+      fontWeight: 700,
+    },
+    h6: {
+      fontSize: 14,
+      lineHeight: 1,
+      fontWeight: 500,
+    },
     button: {
       textTransform: 'none',
     },

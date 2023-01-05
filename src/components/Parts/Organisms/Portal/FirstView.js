@@ -1,24 +1,54 @@
+import { useState } from 'react'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import Slider from 'react-slick'
 //mui
 import Grid from '@mui/material/Grid'
+import Paper from '@mui/material/Paper'
+import Typography from '@mui/material/Typography'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import Button from '@mui/material/Button'
 //style
 import styled from 'styled-components'
 const Wrapper = styled.div`
-  background: gray;
+  background: #fff9f9;
+  padding-bottom: 3rem;
 `
 const StyledImg = styled.img`
   // max-width: 800px;
+  max-height: 500px;
+  width: 100%;
+`
+const SearchUl = styled.ul`
+  display: flex;
+  gap: 20px;
+`
+const SearchLl = styled.li`
+  list-style: none;
+`
+const StyledGrid = styled(Grid)`
+  padding: 0 !important;
 `
 const FirstView = () => {
+  const [anchorEl, setAnchorEl] = useState(null)
+  const [open, setOpen] = useState(0)
+  const handleOpen = (event, index) => {
+    setAnchorEl(event.currentTarget)
+    if (open === index + 1) {
+      setOpen(0)
+      return
+    }
+    setOpen(index + 1)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+    setOpen(0)
+  }
   return (
     <Wrapper>
       <Grid container spacing={2}>
-        <Grid item xs={4}>
-          <p>xs=8</p>
-        </Grid>
-        <Grid item xs={8}>
+        <StyledGrid item xs={12}>
           <Slider {...settings}>
             <div style={{ marginBottom: '-10px' }}>
               <StyledImg src="/images/01.jpg" alt="" />
@@ -27,7 +57,62 @@ const FirstView = () => {
               <StyledImg src="/images/02.jpg" alt="" />
             </div>
           </Slider>
-        </Grid>
+        </StyledGrid>
+        <StyledGrid item xs={8} style={{ margin: '1rem auto' }}>
+          <Paper elevation={3} style={{ padding: '1rem' }}>
+            <Grid
+              container
+              spacing={2}
+              style={{ alignItems: 'center', paddingTop: '1rem' }}>
+              <Grid
+                item
+                xs={2}
+                style={{
+                  textAlign: 'center',
+                  borderRight: '1px solid #ddd',
+                  padding: '.5rem',
+                }}>
+                <Typography variant="h5">現在地から探す</Typography>
+              </Grid>
+              <Grid item xs={10} style={{ padding: 0, textAlign: 'center' }}>
+                <SearchUl>
+                  {areas.map((data, index) => (
+                    <SearchLl key={index}>
+                      <Button
+                        aria-owns={open ? `menu${index + 1}` : null}
+                        aria-haspopup="true"
+                        style={{ zIndex: 1301 }}
+                        onClick={event => handleOpen(event, index)}>
+                        {data.name}
+                        {/* <Typography variant="h5">{data.name}</Typography> */}
+                      </Button>
+                      <Menu
+                        id={`menu${index}`}
+                        anchorEl={anchorEl}
+                        open={open === index + 1}
+                        MenuListProps={{
+                          'aria-labelledby': 'basic-button',
+                          onMouseLeave: handleClose,
+                        }}
+                        anchorOrigin={{
+                          vertical: 'bottom',
+                          horizontal: 'center',
+                        }}
+                        transformOrigin={{
+                          vertical: 'top',
+                          horizontal: 'center',
+                        }}>
+                        <MenuItem>Profile</MenuItem>
+                        <MenuItem>My account</MenuItem>
+                        <MenuItem>Logout</MenuItem>
+                      </Menu>
+                    </SearchLl>
+                  ))}
+                </SearchUl>
+              </Grid>
+            </Grid>
+          </Paper>
+        </StyledGrid>
       </Grid>
     </Wrapper>
   )
@@ -44,3 +129,13 @@ const settings = {
   slidesToShow: 1,
   slidesToScroll: 1,
 }
+const areas = [
+  { name: '北海道・東北' },
+  { name: '関東' },
+  { name: '北陸・甲信越' },
+  { name: '中部' },
+  { name: '関西' },
+  { name: '中国' },
+  { name: '四国' },
+  { name: '九州・沖縄' },
+]
