@@ -30,7 +30,8 @@ const SearchLl = styled.li`
 const StyledGrid = styled(Grid)`
   padding: 0 !important;
 `
-const FirstView = () => {
+const FirstView = props => {
+  const { areas, prefectures } = props
   const [anchorEl, setAnchorEl] = useState(null)
   const [open, setOpen] = useState(0)
   const handleOpen = (event, index) => {
@@ -58,61 +59,68 @@ const FirstView = () => {
             </div>
           </Slider>
         </StyledGrid>
-        <StyledGrid item xs={8} style={{ margin: '1rem auto' }}>
-          <Paper elevation={3} style={{ padding: '1rem' }}>
-            <Grid
-              container
-              spacing={2}
-              style={{ alignItems: 'center', paddingTop: '1rem' }}>
+        {areas && prefectures && (
+          <StyledGrid item xs={8} style={{ margin: '1rem auto' }}>
+            <Paper elevation={3} style={{ padding: '1rem' }}>
               <Grid
-                item
-                xs={2}
-                style={{
-                  textAlign: 'center',
-                  borderRight: '1px solid #ddd',
-                  padding: '.5rem',
-                }}>
-                <Typography variant="h5">現在地から探す</Typography>
+                container
+                spacing={2}
+                style={{ alignItems: 'center', paddingTop: '1rem' }}>
+                <Grid
+                  item
+                  xs={2}
+                  style={{
+                    textAlign: 'center',
+                    borderRight: '1px solid #ddd',
+                    padding: '.5rem',
+                  }}>
+                  <Typography variant="h5">現在地から探す</Typography>
+                </Grid>
+                <Grid item xs={10} style={{ padding: 0, textAlign: 'center' }}>
+                  <SearchUl>
+                    {areas.map((data, index) => (
+                      <SearchLl key={index}>
+                        <Button
+                          aria-owns={open ? `menu${index + 1}` : null}
+                          aria-haspopup="true"
+                          style={{ zIndex: 1301 }}
+                          onClick={event => handleOpen(event, index)}>
+                          {data.name}
+                          {/* <Typography variant="h5">{data.name}</Typography> */}
+                        </Button>
+                        <Menu
+                          id={`menu${index}`}
+                          style={{ marginTop: '1rem' }}
+                          anchorEl={anchorEl}
+                          open={open === index + 1}
+                          MenuListProps={{
+                            'aria-labelledby': 'basic-button',
+                            onMouseLeave: handleClose,
+                          }}
+                          anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center',
+                          }}
+                          transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'center',
+                          }}>
+                          {prefectures.map((data2, index2) => {
+                            if (data2.area_id == data.id) {
+                              return (
+                                <MenuItem key={index2}>{data2.name}</MenuItem>
+                              )
+                            }
+                          })}
+                        </Menu>
+                      </SearchLl>
+                    ))}
+                  </SearchUl>
+                </Grid>
               </Grid>
-              <Grid item xs={10} style={{ padding: 0, textAlign: 'center' }}>
-                <SearchUl>
-                  {areas.map((data, index) => (
-                    <SearchLl key={index}>
-                      <Button
-                        aria-owns={open ? `menu${index + 1}` : null}
-                        aria-haspopup="true"
-                        style={{ zIndex: 1301 }}
-                        onClick={event => handleOpen(event, index)}>
-                        {data.name}
-                        {/* <Typography variant="h5">{data.name}</Typography> */}
-                      </Button>
-                      <Menu
-                        id={`menu${index}`}
-                        anchorEl={anchorEl}
-                        open={open === index + 1}
-                        MenuListProps={{
-                          'aria-labelledby': 'basic-button',
-                          onMouseLeave: handleClose,
-                        }}
-                        anchorOrigin={{
-                          vertical: 'bottom',
-                          horizontal: 'center',
-                        }}
-                        transformOrigin={{
-                          vertical: 'top',
-                          horizontal: 'center',
-                        }}>
-                        <MenuItem>Profile</MenuItem>
-                        <MenuItem>My account</MenuItem>
-                        <MenuItem>Logout</MenuItem>
-                      </Menu>
-                    </SearchLl>
-                  ))}
-                </SearchUl>
-              </Grid>
-            </Grid>
-          </Paper>
-        </StyledGrid>
+            </Paper>
+          </StyledGrid>
+        )}
       </Grid>
     </Wrapper>
   )
@@ -129,13 +137,13 @@ const settings = {
   slidesToShow: 1,
   slidesToScroll: 1,
 }
-const areas = [
-  { name: '北海道・東北' },
-  { name: '関東' },
-  { name: '北陸・甲信越' },
-  { name: '中部' },
-  { name: '関西' },
-  { name: '中国' },
-  { name: '四国' },
-  { name: '九州・沖縄' },
-]
+// const areas = [
+//   { name: '北海道・東北' },
+//   { name: '関東' },
+//   { name: '北陸・甲信越' },
+//   { name: '中部' },
+//   { name: '関西' },
+//   { name: '中国' },
+//   { name: '四国' },
+//   { name: '九州・沖縄' },
+// ]
