@@ -48,12 +48,12 @@ const theme = createTheme({
     },
     h5: {
       fontSize: 14,
-      lineHeight: 1,
+      lineHeight: 1.5,
       fontWeight: 700,
     },
     h6: {
       fontSize: 14,
-      lineHeight: 1,
+      lineHeight: 1.5,
       fontWeight: 500,
     },
     button: {

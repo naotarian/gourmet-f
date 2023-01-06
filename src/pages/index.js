@@ -18,6 +18,9 @@ import styled from 'styled-components'
 const ContentWraper = styled(Grid)`
   max-width: 1000px;
   margin: 0 auto;
+  @media screen and (max-width: 767px) {
+    max-width: 90%;
+  }
 `
 
 export default function Home(props) {
@@ -54,6 +57,21 @@ export default function Home(props) {
             <MobileView>
               <SpFirstView areas={areas} prefectures={prefectures} />
             </MobileView>
+            <ContentWraper>
+              <Typography
+                variant="h5"
+                style={{
+                  margin: '2rem 0',
+                }}>
+                全国のグルメ情報、レストラン・居酒屋のネット予約・クーポン検索
+                なら｜HOT PEPPER Gourmet
+              </Typography>
+              <Typography variant="h6">
+                オトクなクーポンやグルメ情報満載のホットペッパー
+                グルメ　エリア・最寄駅や食べたい料理で楽しく飲食店探しができます。宴会コースの検索もＯＫ！
+                ［おことわり］一部の飲食店情報は、Alikeなどが提供する情報を元に作成されています。掲載されている情報は、Alike会員が任意に登録したものです。掲載内容は保証されませんので、お出かけ前に電話などで必ずご確認ください。
+              </Typography>
+            </ContentWraper>
           </>
         )}
       </PageTemplate>
