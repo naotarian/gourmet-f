@@ -13,7 +13,6 @@ import Button from '@mui/material/Button'
 import styled from 'styled-components'
 const Wrapper = styled.div`
   background: #fff9f9;
-  padding-bottom: 3rem;
 `
 const StyledImg = styled.img`
   // max-width: 800px;
@@ -66,12 +65,9 @@ const FirstView = props => {
           </Slider>
         </StyledGrid>
         {areas && prefectures && (
-          <PcStyledGrid item xs={8} style={{ margin: '1rem auto' }}>
-            <Paper elevation={3} style={{ padding: '1rem' }}>
-              <Grid
-                container
-                spacing={2}
-                style={{ alignItems: 'center', paddingTop: '1rem' }}>
+          <PcStyledGrid item xs={8} style={{ margin: '2rem auto' }}>
+            <Paper elevation={3}>
+              <Grid container spacing={2} style={{ alignItems: 'center' }}>
                 <Grid
                   item
                   xs={2}
@@ -95,7 +91,6 @@ const FirstView = props => {
                         </Button>
                         <Menu
                           id={`menu${index}`}
-                          style={{ marginTop: '1rem' }}
                           anchorEl={anchorEl}
                           open={open === index + 1}
                           MenuListProps={{

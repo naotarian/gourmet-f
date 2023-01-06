@@ -2,14 +2,15 @@
   "presets": [
     "next/babel"
   ],
-  "plugins": [
-    [
-      "babel-plugin-styled-components",
-      {
-        "ssg": true,
-        "displayName": true,
-        "preprocess": false
-      }
-    ]
-  ]
+  "plugins": [["styled-components", { "ssr": true }]]
+  // "plugins": [
+  //   [
+  //     "babel-plugin-styled-components",
+  //     {
+  //       "ssr": true,
+  //       "displayName": true,
+  //       "preprocess": false
+  //     }
+  //   ]
+  // ]
 }
