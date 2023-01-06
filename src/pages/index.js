@@ -3,7 +3,9 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/auth'
 import FirstView from '@/components/Parts/Organisms/Portal/FirstView'
+import SpFirstView from '@/components/Parts/Organisms/Portal/SpFirstView'
 import PageTemplate from '@/components/Parts/Template/Portal/PageTemplate'
+import { BrowserView, MobileView } from 'react-device-detect'
 
 export default function Home(props) {
   const areas = props.res.areas
@@ -23,11 +25,15 @@ export default function Home(props) {
       </Head>
       <PageTemplate>
         {areas && prefectures && (
-          <FirstView areas={areas} prefectures={prefectures} />
+          <>
+            <BrowserView>
+              <FirstView areas={areas} prefectures={prefectures} />
+            </BrowserView>
+            <MobileView>
+              <SpFirstView areas={areas} prefectures={prefectures} />
+            </MobileView>
+          </>
         )}
-        <Link href="/result/result_list">
-          <a>一覧</a>
-        </Link>
       </PageTemplate>
     </>
   )

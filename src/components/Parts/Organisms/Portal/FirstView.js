@@ -30,6 +30,12 @@ const SearchLl = styled.li`
 const StyledGrid = styled(Grid)`
   padding: 0 !important;
 `
+const PcStyledGrid = styled(Grid)`
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+  padding: 0 !important;
+`
 const FirstView = props => {
   const { areas, prefectures } = props
   const [anchorEl, setAnchorEl] = useState(null)
@@ -60,7 +66,7 @@ const FirstView = props => {
           </Slider>
         </StyledGrid>
         {areas && prefectures && (
-          <StyledGrid item xs={8} style={{ margin: '1rem auto' }}>
+          <PcStyledGrid item xs={8} style={{ margin: '1rem auto' }}>
             <Paper elevation={3} style={{ padding: '1rem' }}>
               <Grid
                 container
@@ -84,9 +90,8 @@ const FirstView = props => {
                           aria-owns={open ? `menu${index + 1}` : null}
                           aria-haspopup="true"
                           style={{ zIndex: 1301 }}
-                          onClick={event => handleOpen(event, index)}>
+                          onMouseOver={event => handleOpen(event, index)}>
                           {data.name}
-                          {/* <Typography variant="h5">{data.name}</Typography> */}
                         </Button>
                         <Menu
                           id={`menu${index}`}
@@ -96,14 +101,6 @@ const FirstView = props => {
                           MenuListProps={{
                             'aria-labelledby': 'basic-button',
                             onMouseLeave: handleClose,
-                          }}
-                          anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'center',
-                          }}
-                          transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'center',
                           }}>
                           {prefectures.map((data2, index2) => {
                             if (data2.area_id == data.id) {
@@ -119,7 +116,7 @@ const FirstView = props => {
                 </Grid>
               </Grid>
             </Paper>
-          </StyledGrid>
+          </PcStyledGrid>
         )}
       </Grid>
     </Wrapper>
@@ -137,13 +134,3 @@ const settings = {
   slidesToShow: 1,
   slidesToScroll: 1,
 }
-// const areas = [
-//   { name: '北海道・東北' },
-//   { name: '関東' },
-//   { name: '北陸・甲信越' },
-//   { name: '中部' },
-//   { name: '関西' },
-//   { name: '中国' },
-//   { name: '四国' },
-//   { name: '九州・沖縄' },
-// ]
