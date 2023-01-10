@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
+import { useRouter } from 'next/router'
 
 const QuickGrid = styled(Grid)`
   margin: 2rem auto;
@@ -28,6 +28,7 @@ const MenuProps = {
   },
 }
 const QuickSearch = props => {
+  const router = useRouter()
   const { prefectures, mainCategories, budgets } = props
   const [prefecture, setPrefecture] = useState(0)
   const [mainCategory, setMainCategory] = useState(0)
@@ -40,6 +41,12 @@ const QuickSearch = props => {
   }
   const budgetChange = e => {
     setBudget(e.target.value)
+  }
+  const searchExec = () => {
+    router.push({
+      pathname: '/portal/list',
+      query: { PF: prefecture, MC: mainCategory, PR: budget },
+    })
   }
   return (
     <QuickGrid>
@@ -58,7 +65,7 @@ const QuickSearch = props => {
               id="demo-simple-select"
               MenuProps={MenuProps}>
               {prefectures.map((data, index) => (
-                <MenuItem value={data.id} key={index}>
+                <MenuItem value={data.alias} key={index}>
                   {data.name}
                 </MenuItem>
               ))}
@@ -77,7 +84,7 @@ const QuickSearch = props => {
               id="demo-simple-select"
               MenuProps={MenuProps}>
               {mainCategories.map((data, index) => (
-                <MenuItem value={data.id} key={index}>
+                <MenuItem value={data.alias} key={index}>
                   {data.name}
                 </MenuItem>
               ))}
@@ -94,7 +101,7 @@ const QuickSearch = props => {
               id="demo-simple-select"
               MenuProps={MenuProps}>
               {budgets.map((data, index) => (
-                <MenuItem value={data.id} key={index}>
+                <MenuItem value={data.alias} key={index}>
                   {data.price}
                 </MenuItem>
               ))}
@@ -102,7 +109,12 @@ const QuickSearch = props => {
           </FormControl>
         </Grid>
         <Grid item xs={3}>
-          <Button variant="contained">検索</Button>
+          <Button
+            variant="contained"
+            onClick={searchExec}
+            disabled={!(prefecture && mainCategory && budget)}>
+            検索
+          </Button>
         </Grid>
       </Grid>
     </QuickGrid>
