@@ -6,11 +6,11 @@ import FirstView from '@/components/Parts/Organisms/Portal/FirstView'
 import QuickSearch from '@/components/Parts/Organisms/Portal/QuickSearch'
 import SpFirstView from '@/components/Parts/Organisms/Portal/SpFirstView'
 import PageTemplate from '@/components/Parts/Template/Portal/PageTemplate'
+import Summarize from '@/components/Parts/Organisms/Portal/Summarize'
 import { BrowserView, MobileView } from 'react-device-detect'
 //mui
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
 
 //style
 import styled from 'styled-components'
@@ -18,7 +18,7 @@ import styled from 'styled-components'
 const ContentWraper = styled(Grid)`
   max-width: 1000px;
   margin: 0 auto;
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 1024px) {
     max-width: 90%;
   }
 `
@@ -71,6 +71,7 @@ export default function Home(props) {
                 グルメ　エリア・最寄駅や食べたい料理で楽しく飲食店探しができます。宴会コースの検索もＯＫ！
                 ［おことわり］一部の飲食店情報は、Alikeなどが提供する情報を元に作成されています。掲載されている情報は、Alike会員が任意に登録したものです。掲載内容は保証されませんので、お出かけ前に電話などで必ずご確認ください。
               </Typography>
+              <Summarize />
             </ContentWraper>
           </>
         )}
