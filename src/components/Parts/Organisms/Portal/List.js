@@ -47,6 +47,12 @@ const StyledTableCell = styled(TableCell)`
   width: 30px !important;
   padding: 0;
 `
+const PcFlex = styled(Grid)`
+  @media screen and (min-width: 1024px) {
+    display: flex;
+    gap: 10px;
+  }
+`
 const List = props => {
   const { data, rows } = props
   console.log(data)
@@ -54,10 +60,10 @@ const List = props => {
     <Paper style={resultPaper}>
       <Card style={resultCard}>
         <Grid container spacing={2}>
-          <Grid item xs={3}>
+          <Grid item xs={4} md={3}>
             <img src="/images/thumbnail.jpg" alt="" />
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={8} md={9}>
             <Typography variant="h6">カフェ・スイーツ｜赤羽</Typography>
             <p style={thinSmall}>
               赤羽 台湾 SNS タピオカ ミルク マキアート 茶 テイクアウト セット
@@ -68,7 +74,7 @@ const List = props => {
                 {data.restaurant_name}
               </a>
             </Typography>
-            <Grid style={{ display: 'flex', gap: '10px' }}>
+            <PcFlex>
               <Grid style={{ display: 'flex', gap: '5px' }}>
                 <LightModeIcon color="morning" />
                 <span style={priceSpan}>{data.lunch.price}</span>
@@ -77,7 +83,7 @@ const List = props => {
                 <ModeNightIcon color="night" />
                 <span style={priceSpan}>{data.dinner.price}</span>
               </Grid>
-            </Grid>
+            </PcFlex>
             <Grid
               style={{
                 display: 'flex',

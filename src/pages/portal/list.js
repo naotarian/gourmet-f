@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 //Organisms
 import List from '@/components/Parts/Organisms/Portal/List'
+import { BrowserView, MobileView } from 'react-device-detect'
 
 //style
 import styled from 'styled-components'
@@ -64,14 +65,17 @@ const list = props => {
           <Grid container spacing={2}>
             <Grid
               item
-              xs={2}
+              xs={12}
+              md={2}
               style={{ padding: '2px 5px', background: '#ddd' }}>
-              <StyledPaper>111</StyledPaper>
-              <StyledPaper>111</StyledPaper>
-              <StyledPaper>111</StyledPaper>
-              <StyledPaper>111</StyledPaper>
+              <BrowserView>
+                <StyledPaper>111</StyledPaper>
+                <StyledPaper>111</StyledPaper>
+                <StyledPaper>111</StyledPaper>
+                <StyledPaper>111</StyledPaper>
+              </BrowserView>
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={12} md={10}>
               <Typography
                 variant="h2"
                 style={{
