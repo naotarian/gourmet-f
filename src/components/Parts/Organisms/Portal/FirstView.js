@@ -47,7 +47,9 @@ const FirstView = props => {
     }
     setOpen(index + 1)
   }
-  const handleClose = () => {
+  const handleClose = e => {
+    // const menu = document.getElementById('menu4').children[2]
+    // console.log(menu)
     setAnchorEl(null)
     setOpen(0)
   }
@@ -86,6 +88,7 @@ const FirstView = props => {
                           aria-owns={open ? `menu${index + 1}` : null}
                           aria-haspopup="true"
                           style={{ zIndex: 1301 }}
+                          onMouseLeave={handleClose}
                           onMouseOver={event => handleOpen(event, index)}>
                           {data.name}
                         </Button>

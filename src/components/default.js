@@ -15,6 +15,20 @@ const theme = createTheme({
       dark: '#ba000d',
       contrastText: '#000',
     },
+    morning: {
+      // light: '#ff7961',
+      light: '#ff9e3d',
+      main: '#ff9e3d',
+      dark: '#ff9e3d',
+      contrastText: '#000',
+    },
+    night: {
+      // light: '#ff7961',
+      light: '#0f2350',
+      main: '#0f2350',
+      dark: '#0f2350',
+      contrastText: '#000',
+    },
   },
   typography: {
     fontFamily: [
@@ -55,6 +69,12 @@ const theme = createTheme({
       fontSize: 14,
       lineHeight: 1.5,
       fontWeight: 500,
+    },
+    thinSmall: {
+      fontSize: 12,
+      lineHeight: 1.5,
+      fontWeight: 500,
+      color: '#666666',
     },
     button: {
       textTransform: 'none',
