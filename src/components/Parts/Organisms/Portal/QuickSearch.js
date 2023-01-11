@@ -55,10 +55,11 @@ const QuickSearch = props => {
         <Typography variant="h5">クイック検索</Typography>
       </Grid>
       <Grid container spacing={2} style={{ alignItems: 'center' }}>
-        <Grid item xs={3}>
-          <FormControl size="small" sx={{ m: 1, minWidth: '70%' }}>
+        <Grid item xs={3.5}>
+          <FormControl fullWidth size="small" sx={{ m: 1, minWidth: '70%' }}>
             <InputLabel id="demo-simple-select-label">都道府県</InputLabel>
             <Select
+              label="都道府県"
               value={prefecture}
               onChange={prefectureChange}
               labelId="demo-simple-select-label"
@@ -72,12 +73,13 @@ const QuickSearch = props => {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={3}>
-          <FormControl size="small" sx={{ m: 1, minWidth: '70%' }}>
+        <Grid item xs={3.5}>
+          <FormControl fullWidth size="small" sx={{ m: 1, minWidth: '70%' }}>
             <InputLabel id="demo-simple-select-label">
               お店のジャンル
             </InputLabel>
             <Select
+              label="お店のジャンル"
               value={mainCategory}
               onChange={mainCategoryChange}
               labelId="demo-simple-select-label"
@@ -91,10 +93,11 @@ const QuickSearch = props => {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={3}>
-          <FormControl size="small" sx={{ m: 1, minWidth: '70%' }}>
+        <Grid item xs={3.5}>
+          <FormControl fullWidth size="small" sx={{ m: 1, minWidth: '70%' }}>
             <InputLabel id="demo-simple-select-label">予算</InputLabel>
             <Select
+              label="予算"
               value={budget}
               onChange={budgetChange}
               labelId="demo-simple-select-label"
@@ -108,7 +111,7 @@ const QuickSearch = props => {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={1.5}>
           <Button
             variant="contained"
             onClick={searchExec}
