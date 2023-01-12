@@ -55,7 +55,12 @@ export default function Home(props) {
               </ContentWraper>
             </BrowserView>
             <MobileView>
-              <SpFirstView areas={areas} prefectures={prefectures} />
+              <SpFirstView
+                areas={areas}
+                prefectures={prefectures}
+                mainCategories={mainCategories}
+                budgets={budgets}
+              />
             </MobileView>
             <ContentWraper>
               <Typography

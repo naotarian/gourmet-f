@@ -14,6 +14,7 @@ import LightModeIcon from '@mui/icons-material/LightMode'
 import ModeNightIcon from '@mui/icons-material/ModeNight'
 import TrainIcon from '@mui/icons-material/Train'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
+import Link from 'next/link'
 
 //style
 import styled from 'styled-components'
@@ -55,7 +56,6 @@ const PcFlex = styled(Grid)`
 `
 const List = props => {
   const { data, rows } = props
-  console.log(data)
   return (
     <Paper style={resultPaper}>
       <Card style={resultCard}>
@@ -70,9 +70,9 @@ const List = props => {
               トッピング 電源
             </p>
             <Typography variant="h2">
-              <a href="#" style={nameLink}>
-                {data.restaurant_name}
-              </a>
+              <Link href={`/portal/str/${data.id}`}>
+                <a style={nameLink}>{data.restaurant_name}</a>
+              </Link>
             </Typography>
             <PcFlex>
               <Grid style={{ display: 'flex', gap: '5px' }}>

@@ -32,6 +32,7 @@ const list = props => {
   const restaurants = props.res.restaurants
   const searchNumber = props.res.search_number
   const searchModules = props.res.search_modules
+  const query = props.res.query
   console.log(searchModules)
   const rows = [
     { day: '1/11', status: '〇', dow: '水' },
@@ -82,7 +83,7 @@ const list = props => {
                   borderBottom: '1px dotted #CCCCCC',
                   paddingBottom: '5px',
                 }}>
-                {searchModules.PF_name} | {searchModules.PR_price}
+                {query.PF_name} | {query.PR_price}
                 のグルメ・クーポン情報
               </Typography>
               <Typography
