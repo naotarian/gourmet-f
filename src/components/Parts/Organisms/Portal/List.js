@@ -70,7 +70,7 @@ const List = props => {
               トッピング 電源
             </p>
             <Typography variant="h2">
-              <Link href={`/portal/str/${data.id}`}>
+              <Link href={`/portal/str/${data.unique_code}`}>
                 <a style={nameLink}>{data.restaurant_name}</a>
               </Link>
             </Typography>

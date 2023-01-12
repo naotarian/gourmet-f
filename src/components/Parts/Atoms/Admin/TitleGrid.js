@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import theme from '@/components/defaultAdmin'
 const TitleGrid = styled(Grid)`
-  padding: 3rem 0;
+  padding: 6rem 0;
   text-align: center;
   background: ${theme.palette.secondary.main};
 `
