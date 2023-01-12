@@ -39,8 +39,11 @@ const list = props => {
                     <CardContent>
                       {data.id === restaurantList.active_restaurant_id ? (
                         <Typography
-                          sx={{ fontSize: 14 }}
-                          color="text.secondary"
+                          sx={{
+                            fontSize: 18,
+                            fontWeight: 'bold',
+                            color: '#E41A12',
+                          }}
                           gutterBottom>
                           この店舗を選択中
                         </Typography>

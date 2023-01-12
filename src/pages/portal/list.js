@@ -33,7 +33,6 @@ const list = props => {
   const searchNumber = props.res.search_number
   const searchModules = props.res.search_modules
   const query = props.res.query
-  console.log(searchModules)
   const rows = [
     { day: '1/11', status: '〇', dow: '水' },
     { day: '1/12', status: '◎', dow: '木' },

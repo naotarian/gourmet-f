@@ -100,6 +100,13 @@ const SpFirstView = props => {
               ジャンルを選択してください。
             </Typography>
           )}
+          {phase === 3 && (
+            <Typography
+              variant="h5"
+              style={{ marginTop: '1rem', textAlign: 'center' }}>
+              希望の価格帯を選択してください。
+            </Typography>
+          )}
           <Grid
             container
             spacing={2}

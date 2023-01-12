@@ -29,6 +29,13 @@ const theme = createTheme({
       dark: '#0f2350',
       contrastText: '#000',
     },
+    danger: {
+      // light: '#ff7961',
+      light: '#E41A12',
+      main: '#E41A12',
+      dark: '#E41A12',
+      contrastText: '#000',
+    },
   },
   typography: {
     fontFamily: [
