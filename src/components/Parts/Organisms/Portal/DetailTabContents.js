@@ -7,6 +7,9 @@ import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
+import TopContent from '@/components/Parts/Organisms/Portal/Detail/TopContent'
+import MenuContent from '@/components/Parts/Organisms/Portal/Detail/MenuContent'
+import PhotoContent from '@/components/Parts/Organisms/Portal/Detail/PhotoContent'
 function TabPanel(props) {
   const { children, value, index, ...other } = props
 
@@ -47,7 +50,8 @@ function a11yProps(index) {
     'aria-controls': `full-width-tabpanel-${index}`,
   }
 }
-const DetailTabContents = () => {
+const DetailTabContents = props => {
+  const { images } = props
   const theme = useTheme()
   const [value, setValue] = useState(0)
 
@@ -78,13 +82,13 @@ const DetailTabContents = () => {
         index={value}
         onChangeIndex={handleChangeIndex}>
         <TabPanel value={value} index={0} dir={theme.direction}>
-          Item One
+          <TopContent images={images} />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          Item Two
+          <MenuContent />
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          Item Three
+          <PhotoContent />
         </TabPanel>
       </SwipeableViews>
     </Box>

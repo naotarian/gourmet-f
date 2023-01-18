@@ -16,7 +16,7 @@ const ContentWraper = styled(Grid)`
 `
 const code = props => {
   const store = props.res.store
-  console.log(store)
+  const images = props.res.images
   return (
     <>
       <Head>
@@ -33,7 +33,7 @@ const code = props => {
       <PageTemplate>
         <ContentWraper>
           <DetailTopHeader store={store} />
-          <DetailTabContents />
+          <DetailTabContents images={images} />
         </ContentWraper>
       </PageTemplate>
     </>
