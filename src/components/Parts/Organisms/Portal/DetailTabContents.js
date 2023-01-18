@@ -35,13 +35,16 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired,
 }
 const tabStyle = {
-  background: 'linear-gradient(45deg, #FCA400 10%, #FCA400 90%)',
-  borderRadius: 3,
-  border: 0,
-  color: 'white',
+  // background: 'linear-gradient(45deg, #FCA400 10%, #FCA400 90%)',
+  background: '#fff',
+  // borderRadius: 3,
+  border: '1px solid #ECECEC',
+  // color: 'white',
+  color: '#000',
   height: 48,
   padding: '0 30px',
-  boxShadow: '0 3px 5px 2px rgba(32, 167, 222, .3)',
+  opacity: 1,
+  // boxShadow: 0 3px 5px 2px rgba(32, 167, 222, .3)',
 }
 
 function a11yProps(index) {
