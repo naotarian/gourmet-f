@@ -129,7 +129,7 @@ const TabTop = () => {
         </Grid> */}
         {file.map((f, index) => {
           return (
-            <Grid item xs={8}>
+            <Grid item xs={8} key={index}>
               <input
                 type="file"
                 accept="image/jpeg,image/png"

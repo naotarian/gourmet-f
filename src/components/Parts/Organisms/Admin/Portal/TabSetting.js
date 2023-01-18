@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import axios from '@/lib/axios'
 import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import InputLabel from '@mui/material/InputLabel'
@@ -10,6 +11,8 @@ import Select from '@mui/material/Select'
 import FormGroup from '@mui/material/FormGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
+import TextField from '@mui/material/TextField'
+import Alert from '@mui/material/Alert'
 //style
 import styled from 'styled-components'
 const StylediTtlePaper = styled(Paper)`
@@ -24,16 +27,37 @@ const StyledFormGroup = styled(FormGroup)`
   -webkit-flex-direction: inherit;
   margin-top: 1rem;
 `
-const TabSetting = () => {
-  const [startOfBusiness, setStartOfBusiness] = useState('')
-  const [endOfBusiness, setEndOfBusiness] = useState('')
-  const [reserveLate, setReserveLate] = useState('')
-  const [regularHoliday, setRegularHoliday] = useState('')
+const TabSetting = props => {
+  const { information } = props
+  const [startOfBusiness, setStartOfBusiness] = useState(
+    information.sales_information.start_business.substr(
+      0,
+      information.sales_information.start_business.length - 3,
+    ),
+  )
+  const [endOfBusiness, setEndOfBusiness] = useState(
+    information.sales_information.end_business.substr(
+      0,
+      information.sales_information.end_business.length - 3,
+    ),
+  )
+  const [reserveLate, setReserveLate] = useState(
+    information.sales_information.late_reserve.substr(
+      0,
+      information.sales_information.late_reserve.length - 3,
+    ),
+  )
+  const [regularHoliday, setRegularHoliday] = useState(
+    information.sales_information.regular_holiday,
+  )
+  const [remarks, setRemarks] = useState(information.sales_information.remarks)
   const [payChecks, setpayChecks] = useState({
     cache: true,
     credit: false,
     paypay: false,
+    dpay: false,
   })
+  const [alertMessage, setAlertMessage] = useState('')
 
   const changeStartOfBusiness = event => {
     setStartOfBusiness(event.target.value)
@@ -53,7 +77,31 @@ const TabSetting = () => {
       [event.target.name]: event.target.checked,
     })
   }
-  const { cache, credit, paypay } = payChecks
+  const changeRemarks = e => {
+    setRemarks(e.target.value)
+  }
+  const updateSetting = async () => {
+    const sendDatas = {
+      startOfBusiness: startOfBusiness + ':00',
+      endOfBusiness: endOfBusiness + ':00',
+      reserveLate: reserveLate + ':00',
+      regularHoliday: regularHoliday,
+      payChecks: payChecks,
+      remarks: remarks,
+    }
+    const res = await axios.post(
+      '/api/admin/restaurant/update_sales',
+      sendDatas,
+    )
+    if (res.status === 200) {
+      setAlertMessage(res.data.msg)
+      setTimeout(() => {
+        setAlertMessage('')
+      }, 3000)
+    }
+    console.log(res)
+  }
+  const { cache, credit, paypay, dpay } = payChecks
   return (
     <Grid>
       <StylediTtlePaper>
@@ -158,7 +206,40 @@ const TabSetting = () => {
           }
           label="クレジットカード"
         />
+        <FormControlLabel
+          control={<Checkbox checked={dpay} onChange={payChange} name="dpay" />}
+          label="d払い"
+        />
       </StyledFormGroup>
+      <TextField
+        fullWidth
+        label="備考欄"
+        multiline
+        rows={4}
+        value={remarks}
+        onChange={changeRemarks}
+      />
+      <Grid style={{ textAlign: 'center', marginTop: '2rem' }}>
+        <Button
+          variant="contained"
+          style={{ width: '300px' }}
+          onClick={updateSetting}>
+          更新
+        </Button>
+      </Grid>
+      {alertMessage && (
+        <Alert
+          severity="warning"
+          style={{
+            position: 'fixed',
+            left: '120px',
+            zIndex: '10000',
+            bottom: '35px',
+            width: '300px',
+          }}>
+          {alertMessage}
+        </Alert>
+      )}
     </Grid>
   )
 }
@@ -215,6 +296,7 @@ const times = [
   '24:00',
 ]
 const dow = [
+  '休みなし',
   '毎週月曜日',
   '毎週火曜日',
   '毎週水曜日',
@@ -222,5 +304,4 @@ const dow = [
   '毎週金曜日',
   '毎週土曜日',
   '毎週日曜日',
-  '休みなし',
 ]

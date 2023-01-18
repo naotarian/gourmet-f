@@ -25,7 +25,6 @@ import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
@@ -77,7 +76,7 @@ const AdminMenu = props => {
     setExpanded(
       isExpanded
         ? [...expanded, panel]
-        : expanded.filter((fruit, index) => fruit !== panel),
+        : expanded.filter(fruit => fruit !== panel),
     )
   }
   useEffect(() => {
@@ -108,7 +107,7 @@ const AdminMenu = props => {
     setActiveIdState(event.target.value)
   }
 
-  const displayChange = async changeActiveId => {
+  const displayChange = async () => {
     const res = await axios.post('/api/admin/restaurant/display_change', {
       id: activeIdState,
     })
@@ -116,6 +115,14 @@ const AdminMenu = props => {
     // changeActiveId(res.data.newSession)
     setActiveIdCxt(res.data.newSession)
   }
+  // const displayChange = async changeActiveId => {
+  //   const res = await axios.post('/api/admin/restaurant/display_change', {
+  //     id: activeIdState,
+  //   })
+  //   setActiveId(res.data.newSession)
+  //   // changeActiveId(res.data.newSession)
+  //   setActiveIdCxt(res.data.newSession)
+  // }
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -133,9 +140,13 @@ const AdminMenu = props => {
           {user && <Typography variant="h6">{user.name}</Typography>}
           {activeIdState && restaurants.length > 0 && (
             <Typography variant="h6" noWrap component="div">
-              {restaurants.map((data, index) => {
+              {restaurants.map(data => {
                 if (data.id === activeId) {
-                  return <>{data.restaurant_name}様</>
+                  return (
+                    <Grid key={data.restaurant_name}>
+                      {data.restaurant_name}様
+                    </Grid>
+                  )
                 }
               })}
             </Typography>
@@ -197,7 +208,7 @@ const AdminMenu = props => {
                   expanded={expanded.includes('panel' + index)}
                   onChange={handleChange('panel' + index)}
                   style={{ margin: 0, padding: 0, boxShadow: 'none' }}
-                  key={index}>
+                  key={index + 100}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     id="panel1bh-header"
@@ -219,9 +230,9 @@ const AdminMenu = props => {
                   <AccordionDetails style={{ padding: 0 }}>
                     <List>
                       {text.sub.map((text, index) => (
-                        <>
+                        <Grid key={index}>
                           <Divider />
-                          <ListItem key={index} disablePadding>
+                          <ListItem disablePadding>
                             <ListItemButton
                               onClick={() => menuClick(text.path)}>
                               <ListItemIcon>
@@ -230,7 +241,7 @@ const AdminMenu = props => {
                               <ListItemText primary={text.name} />
                             </ListItemButton>
                           </ListItem>
-                        </>
+                        </Grid>
                       ))}
                     </List>
                     <Divider />
@@ -239,9 +250,9 @@ const AdminMenu = props => {
               )
             } else {
               return (
-                <>
+                <Grid key={index}>
                   <Divider />
-                  <ListItem key={text} disablePadding>
+                  <ListItem disablePadding>
                     <ListItemButton onClick={() => menuClick(text.path)}>
                       <ListItemIcon>
                         {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
@@ -250,7 +261,7 @@ const AdminMenu = props => {
                     </ListItemButton>
                   </ListItem>
                   <Divider />
-                </>
+                </Grid>
               )
             }
           })}

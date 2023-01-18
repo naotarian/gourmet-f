@@ -1,5 +1,5 @@
 import axios from '@/lib/axios'
-import { useState, useEffect, useContext, useRef } from 'react'
+import { useState } from 'react'
 //components
 import PageTemplate from '@/components/Parts/Template/Admin/PageTemplate'
 import TabTop from '@/components/Parts/Organisms/Admin/Portal/TabTop'
@@ -9,8 +9,6 @@ import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import Grid from '@mui/material/Grid'
-import OutlinedInput from '@mui/material/OutlinedInput'
 function TabPanel(props) {
   const { children, value, index, ...other } = props
 
@@ -21,35 +19,33 @@ function TabPanel(props) {
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
       {...other}>
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   )
 }
 
-const index = () => {
+const index = props => {
+  const information = props.res
+  console.log(information)
   const [open, setOpen] = useState(true)
-  const ref = useRef(true)
-  const imageRef = useRef(null)
+  // const ref = useRef(true)
+  // const imageRef = useRef(null)
   const [tabNum, setTabNum] = useState(0)
 
   const handleChange = (event, newValue) => {
     setTabNum(newValue)
   }
-  const [crop, setCrop] = useState({
-    unit: '%', // Can be 'px' or '%'
-    x: 25,
-    y: 25,
-    width: 50,
-    height: 50,
-  })
+  // const [crop, setCrop] = useState({
+  //   unit: '%', // Can be 'px' or '%'
+  //   x: 25,
+  //   y: 25,
+  //   width: 50,
+  //   height: 50,
+  // })
 
-  const fileChange = e => {
-    console.log(e.target.files[0])
-  }
+  // const fileChange = e => {
+  //   console.log(e.target.files[0])
+  // }
 
   return (
     <>
@@ -81,10 +77,24 @@ const index = () => {
           Item Three
         </TabPanel>
         <TabPanel value={tabNum} index={3}>
-          <TabSetting />
+          <TabSetting information={information} />
         </TabPanel>
       </PageTemplate>
     </>
   )
 }
 export default index
+export const getServerSideProps = async ctx => {
+  const cookie = ctx.req?.headers.cookie
+  const res = await axios.get('/api/admin/restaurant/sales_fetch', {
+    headers: {
+      origin: process.env.ORIGIN,
+      cookie: cookie,
+    },
+  })
+  return {
+    props: {
+      res: res.data,
+    },
+  }
+}
