@@ -3,6 +3,7 @@ import { useState, useEffect, useContext, useRef } from 'react'
 //components
 import PageTemplate from '@/components/Parts/Template/Admin/PageTemplate'
 import TabTop from '@/components/Parts/Organisms/Admin/Portal/TabTop'
+import TabSetting from '@/components/Parts/Organisms/Admin/Portal/TabSetting'
 //mui
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
@@ -65,6 +66,7 @@ const index = () => {
             <Tab value={0} label="トップ" />
             <Tab value={1} label="メニュー" />
             <Tab value={2} label="店内・外観" />
+            <Tab value={3} label="店舗設定" />
           </Tabs>
         </Box>
         <TabPanel value={tabNum} index={0}>
@@ -77,6 +79,9 @@ const index = () => {
         </TabPanel>
         <TabPanel value={tabNum} index={2}>
           Item Three
+        </TabPanel>
+        <TabPanel value={tabNum} index={3}>
+          <TabSetting />
         </TabPanel>
       </PageTemplate>
     </>
