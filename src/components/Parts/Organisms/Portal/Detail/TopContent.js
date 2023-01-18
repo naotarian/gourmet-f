@@ -28,7 +28,7 @@ const TopContent = props => {
     <>
       {images.length > 0 && (
         <Grid style={{ width: '400px' }}>
-          <ImageGallery items={images} />
+          <ImageGallery showNav={false} items={images} />
         </Grid>
       )}
       {/* {images.map((data, index) => (
