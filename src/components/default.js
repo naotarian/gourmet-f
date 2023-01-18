@@ -83,6 +83,18 @@ const theme = createTheme({
       fontWeight: 500,
       color: '#666666',
     },
+    note: {
+      fontSize: 12,
+      lineHeight: 1.5,
+      fontWeight: 500,
+      color: '#666666',
+    },
+    noteRed: {
+      fontSize: 12,
+      lineHeight: 1.5,
+      fontWeight: 500,
+      color: 'red',
+    },
     button: {
       textTransform: 'none',
     },

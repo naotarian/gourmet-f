@@ -7,6 +7,9 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
+import FormGroup from '@mui/material/FormGroup'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Checkbox from '@mui/material/Checkbox'
 //style
 import styled from 'styled-components'
 const StylediTtlePaper = styled(Paper)`
@@ -17,9 +20,20 @@ const StylediTtlePaper = styled(Paper)`
 const Wrap = styled(Grid)`
   padding: 1rem;
 `
+const StyledFormGroup = styled(FormGroup)`
+  -webkit-flex-direction: inherit;
+  margin-top: 1rem;
+`
 const TabSetting = () => {
   const [startOfBusiness, setStartOfBusiness] = useState('')
   const [endOfBusiness, setEndOfBusiness] = useState('')
+  const [reserveLate, setReserveLate] = useState('')
+  const [regularHoliday, setRegularHoliday] = useState('')
+  const [payChecks, setpayChecks] = useState({
+    cache: true,
+    credit: false,
+    paypay: false,
+  })
 
   const changeStartOfBusiness = event => {
     setStartOfBusiness(event.target.value)
@@ -27,17 +41,32 @@ const TabSetting = () => {
   const changeEndOfBusiness = event => {
     setEndOfBusiness(event.target.value)
   }
+  const changeReserveLate = event => {
+    setReserveLate(event.target.value)
+  }
+  const changeRegularHoliday = event => {
+    setRegularHoliday(event.target.value)
+  }
+  const payChange = event => {
+    setpayChecks({
+      ...payChecks,
+      [event.target.name]: event.target.checked,
+    })
+  }
+  const { cache, credit, paypay } = payChecks
   return (
     <Grid>
       <StylediTtlePaper>
         <Typography variant="h5">営業時間</Typography>
       </StylediTtlePaper>
       <Wrap>
-        <FormControl style={{ minWidth: '200px', marginRight: '2rem' }}>
-          <InputLabel id="demo-simple-select-label">営業開始時間</InputLabel>
+        <FormControl
+          style={{ minWidth: '200px', margin: '2rem 0' }}
+          size="small">
+          <InputLabel id="startBusinessLabel">営業開始時間</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId="startBusinessLabel"
+            id="endBusiness"
             value={startOfBusiness}
             label="営業開始時間"
             onChange={changeStartOfBusiness}>
@@ -48,11 +77,13 @@ const TabSetting = () => {
             ))}
           </Select>
         </FormControl>
-        <FormControl style={{ minWidth: '200px' }}>
-          <InputLabel id="demo-simple-select-label">営業終了時間</InputLabel>
+        <FormControl
+          style={{ minWidth: '200px', margin: '2rem 1rem' }}
+          size="small">
+          <InputLabel id="endBusinessLabel">営業終了時間</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId="endBusinessLabel"
+            id="endBusiness"
             value={endOfBusiness}
             label="営業終了時間"
             onChange={changeEndOfBusiness}>
@@ -63,13 +94,71 @@ const TabSetting = () => {
             ))}
           </Select>
         </FormControl>
+        <Typography variant="h6">予約可能最遅時間</Typography>
+        <FormControl
+          style={{ minWidth: '200px', margin: '1rem 0' }}
+          size="small">
+          <InputLabel id="reserveLateLabel">予約可能最遅時間</InputLabel>
+          <Select
+            labelId="reserveLateLabel"
+            id="reserveLate"
+            value={reserveLate}
+            label="予約可能最遅時間"
+            onChange={changeReserveLate}>
+            {times.map((time, index) => (
+              <MenuItem value={time} key={index}>
+                {time}
+              </MenuItem>
+            ))}
+          </Select>
+          <Typography variant="noteRed">
+            予約サイトに表示される最も遅い予約時間です。
+            <br />
+            以降の時間は予約を受け付けません。
+          </Typography>
+        </FormControl>
       </Wrap>
       <StylediTtlePaper>
         <Typography variant="h5">定休日設定</Typography>
       </StylediTtlePaper>
+      <FormControl style={{ minWidth: '200px', margin: '1rem 0' }} size="small">
+        <InputLabel id="reserveLateLabel">定休日</InputLabel>
+        <Select
+          labelId="reserveLateLabel"
+          id="reserveLate"
+          value={regularHoliday}
+          label="定休日"
+          onChange={changeRegularHoliday}>
+          {dow.map((d, index) => (
+            <MenuItem value={index} key={d}>
+              {d}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <StylediTtlePaper>
-        <Typography variant="h5">定休日設定</Typography>
+        <Typography variant="h5">支払い方法</Typography>
       </StylediTtlePaper>
+      <StyledFormGroup>
+        <FormControlLabel
+          control={
+            <Checkbox checked={cache} onChange={payChange} name="cache" />
+          }
+          label="現金"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox checked={paypay} onChange={payChange} name="paypay" />
+          }
+          label="PayPay"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox checked={credit} onChange={payChange} name="credit" />
+          }
+          label="クレジットカード"
+        />
+      </StyledFormGroup>
     </Grid>
   )
 }
@@ -124,4 +213,14 @@ const times = [
   '23:00',
   '23:30',
   '24:00',
+]
+const dow = [
+  '毎週月曜日',
+  '毎週火曜日',
+  '毎週水曜日',
+  '毎週木曜日',
+  '毎週金曜日',
+  '毎週土曜日',
+  '毎週日曜日',
+  '休みなし',
 ]

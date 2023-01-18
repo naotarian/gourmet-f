@@ -111,6 +111,19 @@ const themeAdmin = createTheme({
       fontWeight: 400,
       color: 'gray',
     },
+    note: {
+      fontSize: 12,
+      lineHeight: 1.5,
+      fontWeight: 500,
+      color: '#666666',
+    },
+    noteRed: {
+      fontSize: 12,
+      lineHeight: 1.5,
+      fontWeight: 500,
+      color: 'red',
+      margin: '.5rem 0',
+    },
     caption: {
       fontSize: '0.9rem',
       fontWeight: 700,
