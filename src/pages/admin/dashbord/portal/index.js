@@ -86,12 +86,17 @@ const index = props => {
 export default index
 export const getServerSideProps = async ctx => {
   const cookie = ctx.req?.headers.cookie
-  const res = await axios.get('/api/admin/restaurant/sales_fetch', {
-    headers: {
-      origin: process.env.ORIGIN,
-      cookie: cookie,
-    },
-  })
+  const res = await axios
+    .get('/api/admin/restaurant/sales_fetch', {
+      headers: {
+        origin: process.env.ORIGIN,
+        cookie: cookie,
+      },
+    })
+    .catch(error => {
+      ctx.res.writeHead(302, { Location: '/admin/login' })
+      ctx.res.end()
+    })
   return {
     props: {
       res: res.data,

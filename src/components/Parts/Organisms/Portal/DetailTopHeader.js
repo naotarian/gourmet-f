@@ -43,7 +43,7 @@ const ChipSpan = styled.span`
   box-sizing: border-box;
 `
 const priceSpan = {
-  fontSize: '12px',
+  fontSize: '14px',
 }
 const reserveButton = {
   background: 'linear-gradient(45deg, #34B6EB 30%, #20A7DE 90%)',
@@ -56,6 +56,7 @@ const reserveButton = {
 }
 const DetailTopHeader = props => {
   const { store } = props
+  console.log(store)
   return (
     <TopPaper elevation={0}>
       <Grid container spacing={2}>
@@ -103,6 +104,36 @@ const DetailTopHeader = props => {
               {store.restaurant_tel}
             </Typography>
           </SetGrid>
+          <SetGrid>
+            <ChipSpan>営業時間</ChipSpan>
+            <Typography variant="h6" style={priceSpan}>
+              {store.sales_information.start_business.substr(
+                0,
+                store.sales_information.start_business.length - 3,
+              )}
+              ~{' '}
+              {store.sales_information.end_business.substr(
+                0,
+                store.sales_information.end_business.length - 3,
+              )}
+            </Typography>
+          </SetGrid>
+          <Typography
+            variant="note"
+            style={{ whiteSpace: 'pre-line', fontSize: '0.6rem' }}>
+            {store.sales_information.time_remarks}
+          </Typography>
+          <SetGrid>
+            <ChipSpan>定休日</ChipSpan>
+            <Typography variant="h6" style={priceSpan}>
+              {dow[store.sales_information.regular_holiday - 1]}
+            </Typography>
+          </SetGrid>
+          <Typography
+            variant="note"
+            style={{ whiteSpace: 'pre-line', fontSize: '0.6rem' }}>
+            {store.sales_information.regular_holiday_remarks}
+          </Typography>
         </Grid>
         <ButtonWrapper item xs={4}>
           <Button variant="contained" size="large" style={reserveButton}>
@@ -116,3 +147,12 @@ const DetailTopHeader = props => {
   )
 }
 export default DetailTopHeader
+const dow = [
+  '月曜日',
+  '火曜日',
+  '水曜日',
+  '木曜日',
+  '金曜日',
+  '土曜日',
+  '日曜日',
+]

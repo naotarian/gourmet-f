@@ -50,7 +50,16 @@ const TabSetting = props => {
   const [regularHoliday, setRegularHoliday] = useState(
     information.sales_information.regular_holiday,
   )
-  const [remarks, setRemarks] = useState(information.sales_information.remarks)
+  const [payRemarks, setPayRemarks] = useState(
+    information.sales_information.remarks,
+  )
+  const [timeRemarks, setTimeRemarks] = useState(
+    information.sales_information.time_remarks,
+  )
+  const [regularHolidayRemarks, setRegularHolidayRemarks] = useState(
+    information.sales_information.regular_holiday_remarks,
+  )
+  // const [remarks, setRemarks] = useState(information.sales_information.remarks)
   const [payChecks, setpayChecks] = useState({
     cache: true,
     credit: false,
@@ -71,14 +80,20 @@ const TabSetting = props => {
   const changeRegularHoliday = event => {
     setRegularHoliday(event.target.value)
   }
+  const changeRegularHolidayRemarks = event => {
+    setRegularHolidayRemarks(event.target.value)
+  }
+  const changeTimeRemarks = event => {
+    setTimeRemarks(event.target.value)
+  }
   const payChange = event => {
     setpayChecks({
       ...payChecks,
       [event.target.name]: event.target.checked,
     })
   }
-  const changeRemarks = e => {
-    setRemarks(e.target.value)
+  const changePayRemarks = e => {
+    setPayRemarks(e.target.value)
   }
   const updateSetting = async () => {
     const sendDatas = {
@@ -87,7 +102,9 @@ const TabSetting = props => {
       reserveLate: reserveLate + ':00',
       regularHoliday: regularHoliday,
       payChecks: payChecks,
-      remarks: remarks,
+      payRemarks: payRemarks,
+      timeRemarks: timeRemarks,
+      regularHolidayRemarks: regularHolidayRemarks,
     }
     const res = await axios.post(
       '/api/admin/restaurant/update_sales',
@@ -99,7 +116,6 @@ const TabSetting = props => {
         setAlertMessage('')
       }, 3000)
     }
-    console.log(res)
   }
   const { cache, credit, paypay, dpay } = payChecks
   return (
@@ -165,60 +181,84 @@ const TabSetting = props => {
             以降の時間は予約を受け付けません。
           </Typography>
         </FormControl>
+        <TextField
+          fullWidth
+          label="営業時間に関する備考欄"
+          multiline
+          rows={4}
+          value={timeRemarks}
+          onChange={changeTimeRemarks}
+        />
       </Wrap>
       <StylediTtlePaper>
         <Typography variant="h5">定休日設定</Typography>
       </StylediTtlePaper>
-      <FormControl style={{ minWidth: '200px', margin: '1rem 0' }} size="small">
-        <InputLabel id="reserveLateLabel">定休日</InputLabel>
-        <Select
-          labelId="reserveLateLabel"
-          id="reserveLate"
-          value={regularHoliday}
-          label="定休日"
-          onChange={changeRegularHoliday}>
-          {dow.map((d, index) => (
-            <MenuItem value={index} key={d}>
-              {d}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <Wrap>
+        <FormControl
+          style={{ minWidth: '200px', margin: '1rem 0' }}
+          size="small">
+          <InputLabel id="reserveLateLabel">定休日</InputLabel>
+          <Select
+            labelId="reserveLateLabel"
+            id="reserveLate"
+            value={regularHoliday}
+            label="定休日"
+            onChange={changeRegularHoliday}>
+            {dow.map((d, index) => (
+              <MenuItem value={index} key={d}>
+                {d}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <TextField
+          fullWidth
+          label="定休日に関する備考欄"
+          multiline
+          rows={4}
+          value={regularHolidayRemarks}
+          onChange={changeRegularHolidayRemarks}
+        />
+      </Wrap>
       <StylediTtlePaper>
         <Typography variant="h5">支払い方法</Typography>
       </StylediTtlePaper>
-      <StyledFormGroup>
-        <FormControlLabel
-          control={
-            <Checkbox checked={cache} onChange={payChange} name="cache" />
-          }
-          label="現金"
+      <Wrap>
+        <StyledFormGroup>
+          <FormControlLabel
+            control={
+              <Checkbox checked={cache} onChange={payChange} name="cache" />
+            }
+            label="現金"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox checked={paypay} onChange={payChange} name="paypay" />
+            }
+            label="PayPay"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox checked={credit} onChange={payChange} name="credit" />
+            }
+            label="クレジットカード"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox checked={dpay} onChange={payChange} name="dpay" />
+            }
+            label="d払い"
+          />
+        </StyledFormGroup>
+        <TextField
+          fullWidth
+          label="備考欄"
+          multiline
+          rows={4}
+          value={payRemarks}
+          onChange={changePayRemarks}
         />
-        <FormControlLabel
-          control={
-            <Checkbox checked={paypay} onChange={payChange} name="paypay" />
-          }
-          label="PayPay"
-        />
-        <FormControlLabel
-          control={
-            <Checkbox checked={credit} onChange={payChange} name="credit" />
-          }
-          label="クレジットカード"
-        />
-        <FormControlLabel
-          control={<Checkbox checked={dpay} onChange={payChange} name="dpay" />}
-          label="d払い"
-        />
-      </StyledFormGroup>
-      <TextField
-        fullWidth
-        label="備考欄"
-        multiline
-        rows={4}
-        value={remarks}
-        onChange={changeRemarks}
-      />
+      </Wrap>
       <Grid style={{ textAlign: 'center', marginTop: '2rem' }}>
         <Button
           variant="contained"

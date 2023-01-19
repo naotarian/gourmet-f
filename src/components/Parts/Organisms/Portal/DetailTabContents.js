@@ -20,11 +20,7 @@ function TabPanel(props) {
       id={`full-width-tabpanel-${index}`}
       aria-labelledby={`full-width-tab-${index}`}
       {...other}>
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   )
 }
@@ -54,7 +50,7 @@ function a11yProps(index) {
   }
 }
 const DetailTabContents = props => {
-  const { images } = props
+  const { images, store } = props
   const theme = useTheme()
   const [value, setValue] = useState(0)
 
@@ -85,7 +81,7 @@ const DetailTabContents = props => {
         index={value}
         onChangeIndex={handleChangeIndex}>
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <TopContent images={images} />
+          <TopContent images={images} store={store} />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           <MenuContent />

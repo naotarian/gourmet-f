@@ -1,7 +1,6 @@
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
 //mui
-import Card from '@mui/material/Card'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -13,9 +12,6 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 //icons
-import LightModeIcon from '@mui/icons-material/LightMode'
-import ModeNightIcon from '@mui/icons-material/ModeNight'
-import TrainIcon from '@mui/icons-material/Train'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 //style
 import styled from 'styled-components'
@@ -56,7 +52,7 @@ const rows = [
   ],
 ]
 const TopContent = props => {
-  const { images } = props
+  const { images, store } = props
   return (
     <>
       <Grid container spacing={2}>
@@ -115,16 +111,16 @@ const TopContent = props => {
               </>
               <>
                 <TableBody>
-                  {rows.map(row => (
+                  {rows.map((row, index) => (
                     <TableRow
-                      key={row.day}
+                      key={index}
                       sx={{
                         '&:last-child td, &:last-child th': {
                           border: 0,
                         },
                       }}>
                       {row.map((d, w) => (
-                        <StyledTableCell component="th" key={d.day}>
+                        <StyledTableCell component="th" key={w}>
                           <Button
                             variant="text"
                             style={{ padding: 0, minWidth: '50px' }}>
@@ -147,11 +143,6 @@ const TopContent = props => {
           </TableContainer>
         </Grid>
       </Grid>
-      {/* {images.map((data, index) => (
-        <img key={index} src={data} alt="" />
-      ))} */}
-      <p>aa</p>
-      <p>aa</p>
     </>
   )
 }

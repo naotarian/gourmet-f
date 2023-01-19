@@ -33,7 +33,7 @@ const code = props => {
       <PageTemplate>
         <ContentWraper>
           <DetailTopHeader store={store} />
-          <DetailTabContents images={images} />
+          <DetailTabContents images={images} store={store} />
         </ContentWraper>
       </PageTemplate>
     </>
