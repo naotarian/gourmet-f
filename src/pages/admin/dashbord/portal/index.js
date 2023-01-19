@@ -8,7 +8,6 @@ import TabSetting from '@/components/Parts/Organisms/Admin/Portal/TabSetting'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 function TabPanel(props) {
   const { children, value, index, ...other } = props
 
@@ -26,7 +25,6 @@ function TabPanel(props) {
 
 const index = props => {
   const information = props.res
-  console.log(information)
   const [open, setOpen] = useState(true)
   // const ref = useRef(true)
   // const imageRef = useRef(null)

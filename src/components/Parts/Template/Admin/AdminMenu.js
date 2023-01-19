@@ -62,7 +62,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const AdminMenu = props => {
   const { activeIdCxt, setActiveIdCxt } = useContext(ActiveIdContext)
-  console.log(activeIdCxt)
   const user = useAuth({ middleware: 'admin' }).user
   const theme = useTheme()
   const router = useRouter()
@@ -313,7 +312,7 @@ const menus = [
   {
     name: '施設管理',
     sub: [
-      { name: '座席管理', path: '/admin/dashbord/salesInformation' },
+      { name: '座席管理', path: '/admin/dashbord/seats' },
       { name: '座席予約状況', path: '/admin/dashbord/salesInformation' },
     ],
   },
