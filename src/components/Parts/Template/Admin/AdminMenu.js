@@ -151,12 +151,12 @@ const AdminMenu = props => {
               })}
             </Typography>
           )}
-          {activeIdState && restaurants.length > 1 && (
+          {activeIdCxt && restaurants.length > 1 && (
             <Grid style={{ position: 'absolute', right: '100px' }}>
               <Grid style={{ display: 'flex', alignItems: 'baseline' }}>
                 <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
                   <Select
-                    value={activeIdState}
+                    value={activeIdCxt}
                     style={{ background: '#fff' }}
                     onChange={restaurantChange}>
                     {restaurants.map((data, index) => (

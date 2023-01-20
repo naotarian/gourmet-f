@@ -13,7 +13,7 @@ const list = props => {
   const [restaurantList, setRestaurantList] = useState(props.res)
   const [open, setOpen] = useState(true)
   const firstRef = useRef(true)
-  const { activeIdCxt } = useContext(ActiveIdContext)
+  const { activeIdCxt, setActiveIdCxt } = useContext(ActiveIdContext)
 
   useEffect(() => {
     ;(async () => {
@@ -27,6 +27,12 @@ const list = props => {
       }
     })()
   }, [activeIdCxt])
+  const displayChange = async id => {
+    const res = await axios.post('/api/admin/restaurant/display_change', {
+      id: id,
+    })
+    setActiveIdCxt(res.data.newSession)
+  }
   return (
     <>
       <PageTemplate open={open} setOpen={setOpen} title="店舗一覧">
@@ -35,7 +41,9 @@ const list = props => {
             <>
               {restaurantList.restaurants.map((data, index) => (
                 <Grid item xs={4} key={index}>
-                  <Card sx={{ maxWidth: 400, cursor: 'pointer' }}>
+                  <Card
+                    sx={{ maxWidth: 400, cursor: 'pointer' }}
+                    onClick={() => displayChange(data.id)}>
                     <CardContent>
                       {data.id === restaurantList.active_restaurant_id ? (
                         <Typography
