@@ -17,6 +17,7 @@ const ContentWraper = styled(Grid)`
 const code = props => {
   const store = props.res.store
   const images = props.res.images
+  const reserve_calendar = props.res.reserve_calendar
   return (
     <>
       <Head>
@@ -33,7 +34,11 @@ const code = props => {
       <PageTemplate>
         <ContentWraper>
           <DetailTopHeader store={store} />
-          <DetailTabContents images={images} store={store} />
+          <DetailTabContents
+            images={images}
+            store={store}
+            reserve_calendar={reserve_calendar}
+          />
         </ContentWraper>
       </PageTemplate>
     </>

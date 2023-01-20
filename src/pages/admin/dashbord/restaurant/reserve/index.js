@@ -26,7 +26,6 @@ const index = () => {
     },
   ])
   const handleDateSelect = selectionInfo => {
-    console.log('selectionInfo: ', selectionInfo) // 選択した範囲の情報をconsoleに出力
     setEvents(prevState => [
       ...prevState,
       { title: '追加', start: selectionInfo.start, end: selectionInfo.end },
@@ -55,6 +54,16 @@ const index = () => {
                 editable={true}
                 locale="ja"
                 droppable={true}
+                firstDay={5}
+                validRange={() => {
+                  return {
+                    start: '2023-01-20',
+                    end: '2023-01-27',
+                  }
+                }}
+                height={900}
+                slotMinTime="09:00:00"
+                slotMaxTime="25:00:00"
                 events={events}
                 allDaySlot={false}
                 select={handleDateSelect}

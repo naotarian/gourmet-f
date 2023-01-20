@@ -50,7 +50,7 @@ function a11yProps(index) {
   }
 }
 const DetailTabContents = props => {
-  const { images, store } = props
+  const { images, store, reserve_calendar } = props
   const theme = useTheme()
   const [value, setValue] = useState(0)
 
@@ -81,7 +81,11 @@ const DetailTabContents = props => {
         index={value}
         onChangeIndex={handleChangeIndex}>
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <TopContent images={images} store={store} />
+          <TopContent
+            images={images}
+            store={store}
+            reserve_calendar={reserve_calendar}
+          />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           <MenuContent />

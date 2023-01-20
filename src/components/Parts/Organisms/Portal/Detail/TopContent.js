@@ -52,7 +52,8 @@ const rows = [
   ],
 ]
 const TopContent = props => {
-  const { images, store } = props
+  const { images, store, reserve_calendar } = props
+  console.log(reserve_calendar)
   return (
     <>
       <Grid container spacing={2}>
@@ -111,7 +112,7 @@ const TopContent = props => {
               </>
               <>
                 <TableBody>
-                  {rows.map((row, index) => (
+                  {reserve_calendar.map((row, index) => (
                     <TableRow
                       key={index}
                       sx={{
@@ -127,7 +128,7 @@ const TopContent = props => {
                             <Typography
                               variant="h6"
                               style={{ margin: '1rem 0' }}>
-                              {d.day}
+                              {d.date}
                               <br />
                               {d.status}
                             </Typography>
