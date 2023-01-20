@@ -5,14 +5,15 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
+import Divider from '@mui/material/Divider'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import Grid from '@mui/material/Grid'
-import InboxIcon from '@mui/icons-material/Inbox'
-import DraftsIcon from '@mui/icons-material/Drafts'
-const SeatList = props => {
-  const { seats, selectedIndex, handleListItemClick } = props
+import Button from '@mui/material/Button'
 
+import TableRestaurantIcon from '@mui/icons-material/TableRestaurant'
+const SeatList = props => {
+  const { seats, selectedIndex, handleListItemClick, selectClear } = props
   return (
     <Paper>
       {seats.length === 0 ? (
@@ -20,23 +21,25 @@ const SeatList = props => {
       ) : (
         <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
           <List component="nav" aria-label="main mailbox folders">
-            <ListItemButton
-              selected={selectedIndex === 0}
-              onClick={event => handleListItemClick(event, 0)}>
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary="Inbox" />
-            </ListItemButton>
-            <ListItemButton
-              selected={selectedIndex === 1}
-              onClick={event => handleListItemClick(event, 1)}>
-              <ListItemIcon>
-                <DraftsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Drafts" />
-            </ListItemButton>
+            {seats.map((seat, index) => (
+              <Grid key={index}>
+                <ListItemButton
+                  selected={selectedIndex === index}
+                  onClick={event => handleListItemClick(event, index, seat)}>
+                  <ListItemIcon>
+                    <TableRestaurantIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={seat.name} />
+                </ListItemButton>
+                <Divider />
+              </Grid>
+            ))}
           </List>
+          <Grid style={{ padding: '1rem', textAlign: 'right' }}>
+            <Button variant="outlined" onClick={selectClear}>
+              選択をクリア
+            </Button>
+          </Grid>
         </Box>
       )}
     </Paper>

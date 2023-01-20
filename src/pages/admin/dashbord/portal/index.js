@@ -26,24 +26,10 @@ function TabPanel(props) {
 const index = props => {
   const information = props.res
   const [open, setOpen] = useState(true)
-  // const ref = useRef(true)
-  // const imageRef = useRef(null)
   const [tabNum, setTabNum] = useState(0)
-
   const handleChange = (event, newValue) => {
     setTabNum(newValue)
   }
-  // const [crop, setCrop] = useState({
-  //   unit: '%', // Can be 'px' or '%'
-  //   x: 25,
-  //   y: 25,
-  //   width: 50,
-  //   height: 50,
-  // })
-
-  // const fileChange = e => {
-  //   console.log(e.target.files[0])
-  // }
 
   return (
     <>

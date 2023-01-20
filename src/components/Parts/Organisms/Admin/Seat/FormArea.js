@@ -66,7 +66,6 @@ const FormArea = props => {
                 shrink: true,
               }}
               style={{ width: '200px' }}
-              // fullWidth
               inputProps={{ min: 0, max: 10 }}
               variant="standard"
             />
