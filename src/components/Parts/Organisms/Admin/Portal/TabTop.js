@@ -38,7 +38,6 @@ const TabTop = () => {
     setBackCrop(prevState =>
       prevState.map((obj, index) => (index === num ? croppedAreaPixels : obj)),
     )
-    // setBackCrop(croppedAreaPixels)
   }, [])
 
   const changeCrop = (cropVal, num) => {

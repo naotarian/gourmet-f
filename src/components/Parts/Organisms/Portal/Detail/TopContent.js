@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
 //mui
@@ -13,6 +14,8 @@ import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 //icons
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
+//Organisms
+import ReserveCheckModal from '@/components/Parts/Organisms/Portal/Detail/ReserveCheckModal'
 //style
 import styled from 'styled-components'
 const StyledTableCell = styled(TableCell)`
@@ -22,42 +25,18 @@ const StyledTableCell = styled(TableCell)`
   padding: 0;
 `
 const dow = ['月', '火', '水', '木', '金', '土', '日']
-const rows = [
-  [
-    { day: '1/16', status: '◎', dow: '月' },
-    { day: '1/17', status: '◎', dow: '火' },
-    { day: '1/18', status: '◎', dow: '水' },
-    { day: '1/19', status: '◎', dow: '木' },
-    { day: '1/20', status: '◎', dow: '金' },
-    { day: '1/21', status: '◎', dow: '土' },
-    { day: '1/22', status: '◎', dow: '日' },
-  ],
-  [
-    { day: '1/23', status: '◎', dow: '月' },
-    { day: '1/24', status: '◎', dow: '火' },
-    { day: '1/25', status: '◎', dow: '水' },
-    { day: '1/26', status: '◎', dow: '木' },
-    { day: '1/27', status: '◎', dow: '金' },
-    { day: '1/28', status: '◎', dow: '土' },
-    { day: '1/29', status: '◎', dow: '日' },
-  ],
-  [
-    { day: '1/30', status: '◎', dow: '月' },
-    { day: '1/31', status: '◎', dow: '火' },
-    { day: '', status: '', dow: '' },
-    { day: '', status: '', dow: '' },
-    { day: '', status: '', dow: '' },
-    { day: '', status: '', dow: '' },
-    { day: '', status: '', dow: '' },
-  ],
-]
 const TopContent = props => {
   const { images, store, reserve_calendar } = props
-  console.log(reserve_calendar)
+  const [openReserveCheckModal, setOpenReserveCheckModal] = useState(false)
+  const [dataReserveCheckModal, setDataReserveCheckModal] = useState(null)
+  const selectCalender = data => {
+    setDataReserveCheckModal(data)
+    setOpenReserveCheckModal(true)
+  }
   return (
     <>
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={12} lg={6}>
           {images.length > 0 ? (
             <Grid>
               <ImageGallery showNav={false} items={images} />
@@ -68,7 +47,7 @@ const TopContent = props => {
             </Grid>
           )}
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={12} lg={6}>
           <Grid style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
             <CalendarMonthIcon color="primary" fontSize="large" />
             <Typography variant="h5">ネット予約状況</Typography>
@@ -124,7 +103,9 @@ const TopContent = props => {
                         <StyledTableCell component="th" key={w}>
                           <Button
                             variant="text"
-                            style={{ padding: 0, minWidth: '50px' }}>
+                            style={{ padding: 0, minWidth: '50px' }}
+                            onClick={() => selectCalender(d)}
+                            disabled={d.status === '×'}>
                             <Typography
                               variant="h6"
                               style={{ margin: '1rem 0' }}>
@@ -142,6 +123,12 @@ const TopContent = props => {
               </>
             </Table>
           </TableContainer>
+          <ReserveCheckModal
+            dataReserveCheckModal={dataReserveCheckModal}
+            openReserveCheckModal={openReserveCheckModal}
+            setOpenReserveCheckModal={setOpenReserveCheckModal}
+            store={store}
+          />
         </Grid>
       </Grid>
     </>
