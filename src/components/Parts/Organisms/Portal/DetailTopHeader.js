@@ -56,7 +56,6 @@ const reserveButton = {
 }
 const DetailTopHeader = props => {
   const { store } = props
-  console.log(store)
   return (
     <TopPaper elevation={0}>
       <Grid container spacing={2}>

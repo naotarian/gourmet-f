@@ -50,7 +50,14 @@ function a11yProps(index) {
   }
 }
 const DetailTabContents = props => {
-  const { images, store, reserve_calendar } = props
+  const {
+    images,
+    store,
+    reserve_calendar,
+    reserve_calendarNext,
+    currentMonth,
+    nextMonth,
+  } = props
   const theme = useTheme()
   const [value, setValue] = useState(0)
 
@@ -85,6 +92,9 @@ const DetailTabContents = props => {
             images={images}
             store={store}
             reserve_calendar={reserve_calendar}
+            reserve_calendarNext={reserve_calendarNext}
+            currentMonth={currentMonth}
+            nextMonth={nextMonth}
           />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>

@@ -18,6 +18,9 @@ const code = props => {
   const store = props.res.store
   const images = props.res.images
   const reserve_calendar = props.res.reserve_calendar
+  const reserve_calendarNext = props.res.reserve_calendar_next
+  const currentMonth = props.res.current_month
+  const nextMonth = props.res.next_month
   return (
     <>
       <Head>
@@ -38,6 +41,9 @@ const code = props => {
             images={images}
             store={store}
             reserve_calendar={reserve_calendar}
+            reserve_calendarNext={reserve_calendarNext}
+            currentMonth={currentMonth}
+            nextMonth={nextMonth}
           />
         </ContentWraper>
       </PageTemplate>

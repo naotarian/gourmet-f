@@ -32,7 +32,6 @@ const ReserveCheckModal = props => {
     setOpenReserveCheckModal,
     store,
   } = props
-  console.log(store)
   const handleClose = () => setOpenReserveCheckModal(false)
   const [numberOfPeople, setNumberOfPeople] = useState(0)
   const numberOfPeopleChange = event => {
@@ -41,7 +40,11 @@ const ReserveCheckModal = props => {
   const numberItems = () => {
     const number = []
     for (let i = 0; i < 100; i++) {
-      number.push(<MenuItem value={i + 1}>{i + 1}人</MenuItem>)
+      number.push(
+        <MenuItem value={i + 1} key={i}>
+          {i + 1}人
+        </MenuItem>,
+      )
     }
     return number
   }

@@ -26,7 +26,14 @@ const StyledTableCell = styled(TableCell)`
 `
 const dow = ['月', '火', '水', '木', '金', '土', '日']
 const TopContent = props => {
-  const { images, store, reserve_calendar } = props
+  const {
+    images,
+    store,
+    reserve_calendar,
+    reserve_calendarNext,
+    currentMonth,
+    nextMonth,
+  } = props
   const [openReserveCheckModal, setOpenReserveCheckModal] = useState(false)
   const [dataReserveCheckModal, setDataReserveCheckModal] = useState(null)
   const selectCalender = data => {
@@ -50,7 +57,84 @@ const TopContent = props => {
         <Grid item xs={12} md={12} lg={6}>
           <Grid style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
             <CalendarMonthIcon color="primary" fontSize="large" />
-            <Typography variant="h5">ネット予約状況</Typography>
+            <Typography variant="h2">ネット予約状況</Typography>
+          </Grid>
+          <Grid style={{ width: '100%', textAlign: 'right' }}>
+            <Typography variant="h6">{currentMonth}</Typography>
+          </Grid>
+          <TableContainer component={Paper} style={{ marginBottom: '1rem' }}>
+            <Table sx={{ border: '1px solid #ddd' }} aria-label="simple table">
+              <>
+                <TableHead>
+                  <TableRow>
+                    {dow.map((w, index) => {
+                      if (w === '土') {
+                        return (
+                          <StyledTableCell
+                            key={index}
+                            style={{
+                              background: '#EBF6FA',
+                              color: '#3BA3CD',
+                            }}>
+                            {w}
+                          </StyledTableCell>
+                        )
+                      } else if (w === '日') {
+                        return (
+                          <StyledTableCell
+                            key={index}
+                            style={{
+                              background: '#FCE8E7',
+                              color: '#E41A12',
+                            }}>
+                            {w}
+                          </StyledTableCell>
+                        )
+                      } else {
+                        return (
+                          <StyledTableCell key={index}>{w}</StyledTableCell>
+                        )
+                      }
+                    })}
+                  </TableRow>
+                </TableHead>
+              </>
+              <>
+                <TableBody>
+                  {reserve_calendar.map((row, index) => (
+                    <TableRow
+                      key={index}
+                      sx={{
+                        '&:last-child td, &:last-child th': {
+                          border: 0,
+                        },
+                      }}>
+                      {row.map((d, w) => (
+                        <StyledTableCell component="th" key={w}>
+                          <Button
+                            variant="text"
+                            style={{ padding: 0, minWidth: '50px' }}
+                            onClick={() => selectCalender(d)}
+                            disabled={d.status === '×'}>
+                            <Typography
+                              variant="h6"
+                              style={{ margin: '1rem 0' }}>
+                              {d.date}
+                              <br />
+                              {d.status}
+                            </Typography>
+                            <br />
+                          </Button>
+                        </StyledTableCell>
+                      ))}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </>
+            </Table>
+          </TableContainer>
+          <Grid style={{ width: '100%', textAlign: 'right' }}>
+            <Typography variant="h6">{nextMonth}</Typography>
           </Grid>
           <TableContainer component={Paper}>
             <Table sx={{ border: '1px solid #ddd' }} aria-label="simple table">
@@ -91,7 +175,7 @@ const TopContent = props => {
               </>
               <>
                 <TableBody>
-                  {reserve_calendar.map((row, index) => (
+                  {reserve_calendarNext.map((row, index) => (
                     <TableRow
                       key={index}
                       sx={{
