@@ -36,6 +36,8 @@ const TopContent = props => {
   } = props
   const [openReserveCheckModal, setOpenReserveCheckModal] = useState(false)
   const [dataReserveCheckModal, setDataReserveCheckModal] = useState(null)
+  const [numberOfPeople, setNumberOfPeople] = useState(0)
+  const [time, setTime] = useState(0)
   const selectCalender = data => {
     setDataReserveCheckModal(data)
     setOpenReserveCheckModal(true)
@@ -212,6 +214,10 @@ const TopContent = props => {
             openReserveCheckModal={openReserveCheckModal}
             setOpenReserveCheckModal={setOpenReserveCheckModal}
             store={store}
+            numberOfPeople={numberOfPeople}
+            setNumberOfPeople={setNumberOfPeople}
+            time={time}
+            setTime={setTime}
           />
         </Grid>
       </Grid>

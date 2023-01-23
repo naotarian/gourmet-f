@@ -31,11 +31,22 @@ const ReserveCheckModal = props => {
     openReserveCheckModal,
     setOpenReserveCheckModal,
     store,
+    numberOfPeople,
+    setNumberOfPeople,
+    time,
+    setTime,
   } = props
-  const handleClose = () => setOpenReserveCheckModal(false)
-  const [numberOfPeople, setNumberOfPeople] = useState(0)
+  const handleClose = () => {
+    setOpenReserveCheckModal(false)
+    setTime(0)
+    setNumberOfPeople(0)
+  }
+
   const numberOfPeopleChange = event => {
     setNumberOfPeople(event.target.value)
+  }
+  const timeChange = e => {
+    setTime(e.target.value)
   }
   const numberItems = () => {
     const number = []
@@ -47,6 +58,22 @@ const ReserveCheckModal = props => {
       )
     }
     return number
+  }
+  const timeItems = () => {
+    const time = []
+    for (let i = 0; i < 24; i++) {
+      time.push(
+        <MenuItem value={`${i} : 00`} key={`${i} : 00`}>
+          {`${i} : 00`}
+        </MenuItem>,
+      )
+      time.push(
+        <MenuItem value={`${i} : 30`} key={`${i} : 30`}>
+          {`${i} : 30`}
+        </MenuItem>,
+      )
+    }
+    return time
   }
   return (
     <Modal
@@ -88,6 +115,26 @@ const ReserveCheckModal = props => {
                 label="人数"
                 onChange={numberOfPeopleChange}>
                 {numberItems()}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              ご来店お時間帯
+            </Typography>
+          </Grid>
+          <Grid item xs={8}>
+            <FormControl fullWidth size="small">
+              <InputLabel id="demo-simple-select-label">
+                ご来店お時間帯
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={time}
+                label="ご来店お時間帯"
+                onChange={timeChange}>
+                {timeItems()}
               </Select>
             </FormControl>
           </Grid>
