@@ -61,18 +61,13 @@ const ReserveCheckModal = props => {
   }
   const timeItems = () => {
     const time = []
-    for (let i = 0; i < 24; i++) {
+    store.reserve_time_list.map((data, index) => {
       time.push(
-        <MenuItem value={`${i} : 00`} key={`${i} : 00`}>
-          {`${i} : 00`}
-        </MenuItem>,
+        <MenuItem value={data} key={index}>
+          {data}
+        </MenuItem>
       )
-      time.push(
-        <MenuItem value={`${i} : 30`} key={`${i} : 30`}>
-          {`${i} : 30`}
-        </MenuItem>,
-      )
-    }
+    })
     return time
   }
   return (
