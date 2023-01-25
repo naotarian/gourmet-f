@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router'
+import axios from '@/lib/axios'
 import ImageGallery from 'react-image-gallery'
 import 'react-image-gallery/styles/css/image-gallery.css'
 //mui
@@ -34,6 +36,7 @@ const TopContent = props => {
     currentMonth,
     nextMonth,
   } = props
+  const router = useRouter()
   const [openReserveCheckModal, setOpenReserveCheckModal] = useState(false)
   const [dataReserveCheckModal, setDataReserveCheckModal] = useState(null)
   const [numberOfPeople, setNumberOfPeople] = useState(0)
@@ -41,6 +44,13 @@ const TopContent = props => {
   const selectCalender = data => {
     setDataReserveCheckModal(data)
     setOpenReserveCheckModal(true)
+  }
+  const reservePage = async () => {
+    const sendDatas = { numberOfPeople: numberOfPeople, time: time }
+    const res = await axios.post('/api/reserve/reserve_session_save', sendDatas)
+    console.log(res)
+    //予約ページ遷移
+    router.push('/portal/reserve')
   }
   return (
     <>
@@ -218,6 +228,7 @@ const TopContent = props => {
             setNumberOfPeople={setNumberOfPeople}
             time={time}
             setTime={setTime}
+            reservePage={reservePage}
           />
         </Grid>
       </Grid>

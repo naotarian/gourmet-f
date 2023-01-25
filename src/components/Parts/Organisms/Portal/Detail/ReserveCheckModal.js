@@ -35,6 +35,7 @@ const ReserveCheckModal = props => {
     setNumberOfPeople,
     time,
     setTime,
+    reservePage
   } = props
   const handleClose = () => {
     setOpenReserveCheckModal(false)
@@ -70,6 +71,7 @@ const ReserveCheckModal = props => {
     })
     return time
   }
+
   return (
     <Modal
       open={openReserveCheckModal}
@@ -133,6 +135,9 @@ const ReserveCheckModal = props => {
               </Select>
             </FormControl>
           </Grid>
+        </Grid>
+        <Grid style={{ width: '100%', padding: '1rem 0', textAlign: 'right' }}>
+          <Button variant='contained' onClick={reservePage}>予約へ進む</Button>
         </Grid>
       </Box>
     </Modal>
