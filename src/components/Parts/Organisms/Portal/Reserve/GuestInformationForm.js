@@ -1,3 +1,4 @@
+import { useState } from 'react'
 //style
 import styled from 'styled-components'
 //mui
@@ -26,6 +27,37 @@ const IconTextGrid = styled(Grid)`
   gap: 10px;
 `
 const GuestInformationForm = (props) => {
+  const { guestInformation, setGuestInformation, guestInformationErrors, setGuestInformationErrors } = props
+  const [lastNameKanaError, setLastNameKanaError] = useState('')
+  const [firstNameKanaError, setFirstNameKanaError] = useState('')
+  const lastNameChange = (e) => {
+    setGuestInformation((prev) => ({ ...prev, lastName: e.target.value }))
+  }
+  const firstNameChange = (e) => {
+    setGuestInformation((prev) => ({ ...prev, firstName: e.target.value }))
+  }
+  const lastNameKanaChange = (e) => {
+    setGuestInformation((prev) => ({ ...prev, lastNameKana: e.target.value }))
+    setGuestInformationErrors((prev) => ({ ...prev, lastNameKana: '' }))
+    // setLastNameKanaError('')
+    if (e.target.value.length === 0) {
+      // setLastNameKanaError('入力は必須です。')
+      setGuestInformationErrors((prev) => ({ ...prev, lastNameKana: '入力は必須です。' }))
+      return
+    }
+    const regex = /^[ァ-ヶー　]*$/
+    if (!regex.test(e.target.value)) setGuestInformationErrors((prev) => ({ ...prev, lastNameKana: '全角カタカナで入力してください。' }))
+  }
+  const firstNameKanaChange = (e) => {
+    setGuestInformation((prev) => ({ ...prev, firstNameKana: e.target.value }))
+    setGuestInformationErrors((prev) => ({ ...prev, firstNameKana: '' }))
+    if (e.target.value.length === 0) {
+      setGuestInformationErrors((prev) => ({ ...prev, firstNameKana: '入力は必須です。' }))
+      return
+    }
+    const regex = /^[ァ-ヶー　]*$/
+    if (!regex.test(e.target.value)) setGuestInformationErrors((prev) => ({ ...prev, firstNameKana: '全角カタカナで入力してください。' }))
+  }
   return (
     <>
       <StyledFormHeader square>
@@ -43,12 +75,16 @@ const GuestInformationForm = (props) => {
             <TextField
               label="姓"
               size="small"
+              value={guestInformation.lastName}
+              onChange={lastNameChange}
             />
           </Grid>
           <Grid item xs={4} style={{ borderBottom: '1px dashed #ddd' }}>
             <TextField
               label="名"
               size="small"
+              value={guestInformation.firstName}
+              onChange={firstNameChange}
             />
           </Grid>
           <Grid item xs={4} style={{ borderBottom: '1px dashed #ddd', paddingBottom: '.4rem' }}>
@@ -56,14 +92,22 @@ const GuestInformationForm = (props) => {
           </Grid>
           <Grid item xs={4} style={{ borderBottom: '1px dashed #ddd' }}>
             <TextField
+              error={guestInformationErrors.lastNameKana}
               label="姓(カナ)"
               size="small"
+              value={guestInformation.lastNameKana}
+              onChange={lastNameKanaChange}
+              helperText={guestInformationErrors.lastNameKana}
             />
           </Grid>
           <Grid item xs={4} style={{ borderBottom: '1px dashed #ddd' }}>
             <TextField
+              error={guestInformationErrors.firstNameKana}
               label="名(カナ)"
               size="small"
+              value={guestInformation.firstNameKana}
+              onChange={firstNameKanaChange}
+              helperText={guestInformationErrors.firstNameKana}
             />
           </Grid>
         </Grid>

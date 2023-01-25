@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import axios from '@/lib/axios'
 import Head from 'next/head'
 import PageTemplate from '@/components/Parts/Template/Portal/PageTemplate'
 //mui
 import Grid from '@mui/material/Grid'
+import Button from '@mui/material/Button'
 //style
 import styled from 'styled-components'
 //Organisms
@@ -18,6 +20,11 @@ const ContentWraper = styled(Grid)`
 const index = (props) => {
   const time = props.res.time
   const numberOfPeople = props.res.number_of_people
+  const [guestInformation, setGuestInformation] = useState({ lastName: '', firstName: '', lastNameKana: '', firstNameKana: '' })
+  const [guestInformationErrors, setGuestInformationErrors] = useState({ lastName: '', firstName: '', lastNameKana: '', firstNameKana: '' })
+  const submit = () => {
+    console.log(guestInformation)
+  }
   return (
     <>
       <Head>
@@ -34,7 +41,15 @@ const index = (props) => {
       <PageTemplate>
         <ContentWraper>
           <ReserveInformationForm numberOfPeople={numberOfPeople} time={time} />
-          <GuestInformationForm />
+          <GuestInformationForm
+            guestInformation={guestInformation}
+            setGuestInformation={setGuestInformation}
+            guestInformationErrors={guestInformationErrors}
+            setGuestInformationErrors={setGuestInformationErrors}
+          />
+          <Grid style={{ textAlign: 'center' }}>
+            <Button variant='contained' size='large' style={{ width: '300px' }} onClick={submit}>予約</Button>
+          </Grid>
         </ContentWraper>
       </PageTemplate>
     </>
