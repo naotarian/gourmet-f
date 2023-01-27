@@ -39,7 +39,7 @@ const ReserveInformationForm = props => {
         <Grid container spacing={2} style={{ alignItems: 'end' }}>
           <Grid
             item
-            xs={6}
+            xs={12}
             md={4}
             lg={4}
             style={{ borderBottom: '1px dashed #ddd', paddingBottom: '.4rem' }}>
@@ -47,7 +47,7 @@ const ReserveInformationForm = props => {
           </Grid>
           <Grid
             item
-            xs={6}
+            xs={12}
             md={8}
             lg={8}
             style={{ borderBottom: '1px dashed #ddd' }}>
@@ -57,7 +57,7 @@ const ReserveInformationForm = props => {
           </Grid>
           <Grid
             item
-            xs={6}
+            xs={12}
             md={4}
             lg={4}
             style={{ borderBottom: '1px dashed #ddd', paddingBottom: '.4rem' }}>
@@ -65,7 +65,7 @@ const ReserveInformationForm = props => {
           </Grid>
           <Grid
             item
-            xs={6}
+            xs={12}
             md={8}
             lg={8}
             style={{ borderBottom: '1px dashed #ddd' }}>
@@ -75,7 +75,7 @@ const ReserveInformationForm = props => {
           </Grid>
           <Grid
             item
-            xs={6}
+            xs={12}
             md={4}
             lg={4}
             style={{ borderBottom: '1px dashed #ddd', paddingBottom: '.4rem' }}>
@@ -83,7 +83,7 @@ const ReserveInformationForm = props => {
           </Grid>
           <Grid
             item
-            xs={6}
+            xs={12}
             md={8}
             lg={8}
             style={{ borderBottom: '1px dashed #ddd' }}>
@@ -93,7 +93,7 @@ const ReserveInformationForm = props => {
           </Grid>
           <Grid
             item
-            xs={6}
+            xs={12}
             md={4}
             lg={4}
             style={{ borderBottom: '1px dashed #ddd', paddingBottom: '.4rem' }}>
@@ -101,7 +101,7 @@ const ReserveInformationForm = props => {
           </Grid>
           <Grid
             item
-            xs={6}
+            xs={12}
             md={8}
             lg={8}
             style={{ borderBottom: '1px dashed #ddd' }}>

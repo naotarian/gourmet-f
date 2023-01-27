@@ -36,6 +36,7 @@ const TopContent = props => {
     currentMonth,
     nextMonth,
   } = props
+  console.log(reserve_calendar)
   const router = useRouter()
   const [openReserveCheckModal, setOpenReserveCheckModal] = useState(false)
   const [dataReserveCheckModal, setDataReserveCheckModal] = useState(null)
@@ -133,7 +134,7 @@ const TopContent = props => {
                             variant="text"
                             style={{ padding: 0, minWidth: '50px' }}
                             onClick={() => selectCalender(d)}
-                            disabled={d.status === '×'}>
+                            disabled={d.status === '×' || d.disabled}>
                             <Typography
                               variant="h6"
                               style={{ margin: '1rem 0' }}>

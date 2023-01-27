@@ -13,7 +13,7 @@ import GuestInformationForm from '@/components/Parts/Organisms/Portal/Reserve/Gu
 import ReserveInformationForm from '@/components/Parts/Organisms/Portal/Reserve/ReserveInformationForm'
 const ContentWraper = styled(Grid)`
   max-width: 950px;
-  margin: 2rem auto 6rem auto;
+  margin: 2rem auto 10rem auto;
   @media screen and (max-width: 1024px) {
     max-width: 90%;
   }
@@ -105,7 +105,11 @@ const index = props => {
             <Button
               variant="outlined"
               size="large"
-              style={{ position: 'absolute', right: 0 }}
+              sx={{
+                position: 'absolute',
+                right: 0,
+                bottom: { xs: '-100px', md: 0, lg: 0 },
+              }}
               onClick={back}>
               内容を修正する
             </Button>
