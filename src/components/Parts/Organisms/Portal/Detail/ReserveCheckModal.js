@@ -151,7 +151,10 @@ const ReserveCheckModal = props => {
           </Grid>
         </Grid>
         <Grid style={{ width: '100%', padding: '1rem 0', textAlign: 'right' }}>
-          <Button variant="contained" onClick={reservePage}>
+          <Button
+            variant="contained"
+            onClick={reservePage}
+            disabled={numberOfPeople === 0 || time === 0}>
             予約へ進む
           </Button>
         </Grid>

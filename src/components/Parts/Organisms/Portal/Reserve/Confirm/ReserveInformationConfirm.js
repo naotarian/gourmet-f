@@ -44,6 +44,9 @@ const ReserveInformationConfirm = props => {
       router.push('/portal/reserve/complate')
     } catch (error) {}
   }
+  const back = () => {
+    router.back()
+  }
   return (
     <>
       <StyledFormHeader square>
@@ -251,7 +254,8 @@ const ReserveInformationConfirm = props => {
           <Button
             variant="outlined"
             size="large"
-            style={{ position: 'absolute', right: 0 }}>
+            style={{ position: 'absolute', right: 0 }}
+            onClick={back}>
             内容を修正する
           </Button>
         </Grid>

@@ -13,7 +13,7 @@ import GuestInformationForm from '@/components/Parts/Organisms/Portal/Reserve/Gu
 import ReserveInformationForm from '@/components/Parts/Organisms/Portal/Reserve/ReserveInformationForm'
 const ContentWraper = styled(Grid)`
   max-width: 950px;
-  margin: 2rem auto 0 auto;
+  margin: 2rem auto 6rem auto;
   @media screen and (max-width: 1024px) {
     max-width: 90%;
   }
@@ -58,6 +58,9 @@ const index = props => {
     console.log(res)
     router.push('/portal/reserve/confirm')
   }
+  const back = () => {
+    router.back()
+  }
   return (
     <>
       <Head>
@@ -86,13 +89,25 @@ const index = props => {
             guestInformationErrors={guestInformationErrors}
             setGuestInformationErrors={setGuestInformationErrors}
           />
-          <Grid style={{ textAlign: 'center' }}>
+          <Grid
+            style={{
+              textAlign: 'center',
+              marginTop: '2rem',
+              position: 'relative',
+            }}>
             <Button
               variant="contained"
               size="large"
               style={{ width: '300px' }}
               onClick={submit}>
               予約
+            </Button>
+            <Button
+              variant="outlined"
+              size="large"
+              style={{ position: 'absolute', right: 0 }}
+              onClick={back}>
+              内容を修正する
             </Button>
           </Grid>
         </ContentWraper>

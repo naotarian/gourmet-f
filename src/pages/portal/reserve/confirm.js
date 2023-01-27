@@ -12,7 +12,7 @@ import styled from 'styled-components'
 import ReserveInformationConfirm from '@/components/Parts/Organisms/Portal/Reserve/Confirm/ReserveInformationConfirm'
 const ContentWraper = styled(Grid)`
   max-width: 950px;
-  margin: 2rem auto 0 auto;
+  margin: 2rem auto 6rem auto;
   @media screen and (max-width: 1024px) {
     max-width: 90%;
   }
