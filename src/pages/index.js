@@ -31,7 +31,8 @@ export default function Home(props) {
   return (
     <>
       <Head>
-        <title>Laravel</title>
+        <title>全国のグルメ情報、レストラン・居酒屋のネット予約・クーポン検索
+          なら｜Gourmet</title>
         <link
           href="https://fonts.googleapis.com/css?family=Noto+Sans"
           rel="stylesheet"
@@ -87,10 +88,11 @@ export default function Home(props) {
 
 export const getServerSideProps = async ctx => {
   const cookie = ctx.req?.headers.cookie
+  console.log(ctx.req)
   const res = await axios.get('/api/portal/top', {
     headers: {
       origin: process.env.ORIGIN,
-      cookie: cookie,
+      // cookie: cookie,
     },
   })
   return {

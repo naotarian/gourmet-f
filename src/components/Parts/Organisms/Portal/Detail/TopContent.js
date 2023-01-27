@@ -46,7 +46,13 @@ const TopContent = props => {
     setOpenReserveCheckModal(true)
   }
   const reservePage = async () => {
-    const sendDatas = { numberOfPeople: numberOfPeople, time: time }
+    const sendDatas = {
+      numberOfPeople: numberOfPeople,
+      date: dataReserveCheckModal.date,
+      dow: dataReserveCheckModal.dow,
+      time: time,
+      store: store,
+    }
     const res = await axios.post('/api/reserve/reserve_session_save', sendDatas)
     console.log(res)
     //予約ページ遷移
@@ -131,7 +137,7 @@ const TopContent = props => {
                             <Typography
                               variant="h6"
                               style={{ margin: '1rem 0' }}>
-                              {d.date}
+                              {d.date.slice(5)}
                               <br />
                               {d.status}
                             </Typography>
@@ -205,7 +211,7 @@ const TopContent = props => {
                             <Typography
                               variant="h6"
                               style={{ margin: '1rem 0' }}>
-                              {d.date}
+                              {d.date.slice(5)}
                               <br />
                               {d.status}
                             </Typography>

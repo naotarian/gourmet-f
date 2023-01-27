@@ -35,7 +35,7 @@ const ReserveCheckModal = props => {
     setNumberOfPeople,
     time,
     setTime,
-    reservePage
+    reservePage,
   } = props
   const handleClose = () => {
     setOpenReserveCheckModal(false)
@@ -66,7 +66,7 @@ const ReserveCheckModal = props => {
       time.push(
         <MenuItem value={data} key={index}>
           {data}
-        </MenuItem>
+        </MenuItem>,
       )
     })
     return time
@@ -115,6 +115,20 @@ const ReserveCheckModal = props => {
               </Select>
             </FormControl>
           </Grid>
+          {openReserveCheckModal && (
+            <>
+              <Grid item xs={4}>
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  ご来店日
+                </Typography>
+              </Grid>
+              <Grid item xs={8} style={{ marginTop: '.8rem' }}>
+                <Typography variant="h2">
+                  {dataReserveCheckModal.date}({dataReserveCheckModal.dow})
+                </Typography>
+              </Grid>
+            </>
+          )}
           <Grid item xs={4}>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               ご来店お時間帯
@@ -137,7 +151,9 @@ const ReserveCheckModal = props => {
           </Grid>
         </Grid>
         <Grid style={{ width: '100%', padding: '1rem 0', textAlign: 'right' }}>
-          <Button variant='contained' onClick={reservePage}>予約へ進む</Button>
+          <Button variant="contained" onClick={reservePage}>
+            予約へ進む
+          </Button>
         </Grid>
       </Box>
     </Modal>

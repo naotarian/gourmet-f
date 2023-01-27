@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 import axios from '@/lib/axios'
 import Head from 'next/head'
 import PageTemplate from '@/components/Parts/Template/Portal/PageTemplate'
@@ -17,13 +18,45 @@ const ContentWraper = styled(Grid)`
     max-width: 90%;
   }
 `
-const index = (props) => {
+const index = props => {
   const time = props.res.time
   const numberOfPeople = props.res.number_of_people
-  const [guestInformation, setGuestInformation] = useState({ lastName: '', firstName: '', lastNameKana: '', firstNameKana: '' })
-  const [guestInformationErrors, setGuestInformationErrors] = useState({ lastName: '', firstName: '', lastNameKana: '', firstNameKana: '' })
-  const submit = () => {
-    console.log(guestInformation)
+  const store = props.res.store
+  const date = props.res.date
+  const dow = props.res.dow
+  const router = useRouter()
+  const [guestInformation, setGuestInformation] = useState({
+    lastName: '',
+    firstName: '',
+    lastNameKana: '',
+    firstNameKana: '',
+    email: '',
+    cellPhone: '',
+    fixedPhone: '',
+    remarks: '',
+  })
+  const [guestInformationErrors, setGuestInformationErrors] = useState({
+    lastName: '',
+    firstName: '',
+    lastNameKana: '',
+    firstNameKana: '',
+    email: '',
+    cellPhone: '',
+    fixedPhone: '',
+    remarks: '',
+  })
+  const submit = async () => {
+    const sendDatas = {
+      guestInformation: guestInformation,
+      storeId: store.id,
+      date: date,
+      dow: dow,
+      numberOfPeople: numberOfPeople,
+      time: time,
+    }
+    const res = await axios.post('/api/reserve/confirm', sendDatas)
+    console.log(res)
+    router.push('/portal/reserve/confirm')
   }
   return (
     <>
@@ -40,7 +73,13 @@ const index = (props) => {
       </Head>
       <PageTemplate>
         <ContentWraper>
-          <ReserveInformationForm numberOfPeople={numberOfPeople} time={time} />
+          <ReserveInformationForm
+            numberOfPeople={numberOfPeople}
+            time={time}
+            store={store}
+            date={date}
+            dow={dow}
+          />
           <GuestInformationForm
             guestInformation={guestInformation}
             setGuestInformation={setGuestInformation}
@@ -48,7 +87,13 @@ const index = (props) => {
             setGuestInformationErrors={setGuestInformationErrors}
           />
           <Grid style={{ textAlign: 'center' }}>
-            <Button variant='contained' size='large' style={{ width: '300px' }} onClick={submit}>予約</Button>
+            <Button
+              variant="contained"
+              size="large"
+              style={{ width: '300px' }}
+              onClick={submit}>
+              予約
+            </Button>
           </Grid>
         </ContentWraper>
       </PageTemplate>
@@ -62,7 +107,7 @@ export const getServerSideProps = async ctx => {
     headers: {
       origin: process.env.ORIGIN,
       cookie: cookie,
-    }
+    },
   })
   return {
     props: {
