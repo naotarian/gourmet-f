@@ -110,6 +110,20 @@ const ReserveCheckModal = props => {
                 id="demo-simple-select"
                 value={numberOfPeople}
                 label="人数"
+                MenuProps={{
+                  anchorOrigin: {
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  },
+                  transformOrigin: {
+                    vertical: 'top',
+                    horizontal: 'left',
+                  },
+                  getcontentanchorel: null,
+                  classes: {
+                    paper: { maxHeight: '300px' },
+                  },
+                }}
                 onChange={numberOfPeopleChange}>
                 {numberItems()}
               </Select>

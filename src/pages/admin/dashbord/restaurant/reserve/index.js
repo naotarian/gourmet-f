@@ -22,7 +22,7 @@ const index = () => {
     {
       title: 'event3',
       start: '2022-12-25 12:30:00',
-      allDay: false, // will make the time show
+      allDay: false,
     },
   ])
   const handleDateSelect = selectionInfo => {
@@ -43,11 +43,12 @@ const index = () => {
       <AdminMenu open={open} setOpen={setOpen} />
       <WrapperGrid open={open}>
         <div className="demo-app">
+          aaaa
           {events && (
             <div className="demo-app-main">
               <FullCalendar
                 plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                initialView="timeGridWeek" // 初期表示のモードを設定する
+                initialView="timeGridWeek"
                 headerToolbar={{
                   center: 'dayGridMonth,timeGridWeek',
                 }}
@@ -55,17 +56,22 @@ const index = () => {
                 locale="ja"
                 droppable={true}
                 firstDay={5}
-                validRange={() => {
-                  return {
-                    start: '2023-01-20',
-                    end: '2023-01-27',
-                  }
-                }}
+                // validRange={() => {
+                //   return {
+                //     start: '2023-01-20',
+                //     end: '2023-01-27',
+                //   }
+                // }}
                 height={900}
                 slotMinTime="09:00:00"
                 slotMaxTime="25:00:00"
                 events={events}
                 allDaySlot={false}
+                // headerToolbar={{
+                //   start: 'title',
+                //   center: 'prev, next, today',
+                //   end: 'dayGridMonth,timeGridWeek',
+                // }}
                 select={handleDateSelect}
                 selectable={true}
                 selectMirror={true}

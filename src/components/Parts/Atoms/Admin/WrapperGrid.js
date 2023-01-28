@@ -3,6 +3,7 @@ import Grid from '@mui/material/Grid'
 const WrapperGrid = styled(Grid)`
   margin-left: ${props => (props.open ? '240px' : 0)};
   padding: 0;
+  margin-top: 4rem;
 `
 const StyledGrid = ({ ...props }) => <WrapperGrid {...props} />
 export default StyledGrid

@@ -307,7 +307,10 @@ const menus = [
   },
   {
     name: '予約管理',
-    sub: [{ name: '予約状況', path: '/admin/dashbord/restaurant/reserve' }],
+    sub: [
+      { name: '予約一覧', path: '/admin/dashbord/restaurant/reserve/list' },
+      { name: '予約状況', path: '/admin/dashbord/restaurant/reserve' },
+    ],
   },
   {
     name: '施設管理',
