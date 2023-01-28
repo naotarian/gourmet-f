@@ -19,21 +19,37 @@ const ContentWraper = styled(Grid)`
   }
 `
 const index = props => {
-  const time = props.res.time
-  const numberOfPeople = props.res.number_of_people
-  const store = props.res.store
-  const date = props.res.date
-  const dow = props.res.dow
+  const time = props.res.reserve_session.time
+  const numberOfPeople = props.res.reserve_session.number_of_people
+  const store = props.res.reserve_session.store
+  const date = props.res.reserve_session.date
+  const dow = props.res.reserve_session.dow
+  const confirmSession = props.res.confirm_session
   const router = useRouter()
-  const [guestInformation, setGuestInformation] = useState({
-    lastName: '',
-    firstName: '',
-    lastNameKana: '',
-    firstNameKana: '',
-    email: '',
-    cellPhone: '',
-    fixedPhone: '',
-    remarks: '',
+  const [guestInformation, setGuestInformation] = useState(() => {
+    if (confirmSession.length) {
+      return {
+        lastName: confirmSession.guest_info?.lastName,
+        firstName: confirmSession.guest_info?.firstName,
+        lastNameKana: confirmSession.guest_info?.lastNameKana,
+        firstNameKana: confirmSession.guest_info?.firstNameKana,
+        email: confirmSession.guest_info?.email,
+        cellPhone: confirmSession.guest_info?.cellPhone,
+        fixedPhone: confirmSession.guest_info?.fixedPhone,
+        remarks: confirmSession.guest_info?.remarks,
+      }
+    } else {
+      return {
+        lastName: '',
+        firstName: '',
+        lastNameKana: '',
+        firstNameKana: '',
+        email: '',
+        cellPhone: '',
+        fixedPhone: '',
+        remarks: '',
+      }
+    }
   })
   const [guestInformationErrors, setGuestInformationErrors] = useState({
     lastName: '',
@@ -55,7 +71,6 @@ const index = props => {
       time: time,
     }
     const res = await axios.post('/api/reserve/confirm', sendDatas)
-    console.log(res)
     router.push('/portal/reserve/confirm')
   }
   const back = () => {
