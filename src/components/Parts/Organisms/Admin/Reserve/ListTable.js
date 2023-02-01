@@ -16,6 +16,7 @@ import FirstPageIcon from '@mui/icons-material/FirstPage'
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import LastPageIcon from '@mui/icons-material/LastPage'
+import Link from 'next/link'
 
 function TablePaginationActions(props) {
   const theme = useTheme()
@@ -100,8 +101,10 @@ const ListTable = props => {
   }
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+    <TableContainer
+      component={Paper}
+      style={{ width: '80%', margin: '0 auto' }}>
+      <Table>
         <TableHead>
           <TableRow>
             <TableCell>予約番号</TableCell>
@@ -120,8 +123,11 @@ const ListTable = props => {
             : reserveDatas
           ).map((row, index) => (
             <TableRow key={index}>
-              <TableCell component="th" scope="row">
-                {row.reserve_number}
+              <TableCell>
+                <Link
+                  href={`/admin/dashbord/restaurant/reserve/${row.reserve_number}`}>
+                  <a>{row.reserve_number}</a>
+                </Link>
               </TableCell>
               <TableCell style={{ width: 160 }}>{row.first_name}</TableCell>
               <TableCell style={{ width: 160 }}>{row.reserve_date}</TableCell>

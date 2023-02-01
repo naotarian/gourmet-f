@@ -31,8 +31,10 @@ export default function Home(props) {
   return (
     <>
       <Head>
-        <title>全国のグルメ情報、レストラン・居酒屋のネット予約・クーポン検索
-          なら｜Gourmet</title>
+        <title>
+          全国のグルメ情報、レストラン・居酒屋のネット予約・クーポン検索
+          なら｜Gourmet
+        </title>
         <link
           href="https://fonts.googleapis.com/css?family=Noto+Sans"
           rel="stylesheet"

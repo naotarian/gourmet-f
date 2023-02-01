@@ -1,11 +1,7 @@
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
+import { useState } from 'react'
 import PageTemplate from '@/components/Parts/Template/Admin/PageTemplate'
 import ListTable from '@/components/Parts/Organisms/Admin/Reserve/ListTable'
 import axios from '@/lib/axios'
-//mui
-import Card from '@mui/material/Card'
-import Grid from '@mui/material/Grid'
 const list = props => {
   const [open, setOpen] = useState(true)
   const [reserveDatas, setReserveDatas] = useState(
