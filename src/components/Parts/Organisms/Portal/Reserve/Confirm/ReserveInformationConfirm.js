@@ -29,9 +29,6 @@ const IconTextGrid = styled(Grid)`
 `
 const ReserveInformationConfirm = props => {
   const { storeInfo, guestInfo, reserveInfo } = props
-  console.log(storeInfo)
-  console.log(guestInfo)
-  console.log(reserveInfo)
   const router = useRouter()
   const reserve = async () => {
     try {

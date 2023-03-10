@@ -61,7 +61,6 @@ const test = () => {
     reader.readAsDataURL(event.target?.files[0])
   }
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
-    console.log(croppedArea, croppedAreaPixels)
     setBackCrop(croppedAreaPixels)
   }, [])
 

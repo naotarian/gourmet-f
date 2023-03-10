@@ -10,10 +10,8 @@ const reserveDetail = () => {
   useEffect(() => {
     if (!router.isReady) return
     ;(async () => {
-      console.log(reserveNumber)
-      const sendDatas = {reserveNumber: reserveNumber}
+      const sendDatas = { reserveNumber: reserveNumber }
       const res = await axios.post('/api/admin/reserve/detail', sendDatas)
-      console.log(res)
     })()
   }, [router.isReady, router.query.reserveNumber])
   const [open, setOpen] = useState(true)

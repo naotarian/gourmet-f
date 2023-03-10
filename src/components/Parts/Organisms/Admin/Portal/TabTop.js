@@ -57,7 +57,6 @@ const TabTop = () => {
     const res = await axios.post('/api/admin/imageUpload', sendData)
     setImage([null, null, null, null, null])
     ref.current.value = ''
-    console.log(ref.current.value)
   }
 
   return (

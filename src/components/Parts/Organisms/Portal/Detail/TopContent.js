@@ -36,7 +36,6 @@ const TopContent = props => {
     currentMonth,
     nextMonth,
   } = props
-  console.log(reserve_calendar)
   const router = useRouter()
   const [openReserveCheckModal, setOpenReserveCheckModal] = useState(false)
   const [dataReserveCheckModal, setDataReserveCheckModal] = useState(null)
@@ -55,7 +54,6 @@ const TopContent = props => {
       store: store,
     }
     const res = await axios.post('/api/reserve/reserve_session_save', sendDatas)
-    console.log(res)
     //予約ページ遷移
     router.push('/portal/reserve')
   }

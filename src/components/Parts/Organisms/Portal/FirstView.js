@@ -48,8 +48,6 @@ const FirstView = props => {
     setOpen(index + 1)
   }
   const handleClose = e => {
-    // const menu = document.getElementById('menu4').children[2]
-    // console.log(menu)
     setAnchorEl(null)
     setOpen(0)
   }

@@ -106,7 +106,6 @@ export const getServerSideProps = async ctx => {
       ctx.res.writeHead(302, { Location: '/admin/login' })
       ctx.res.end()
     })
-  // console.log(res.statusCode)
   return {
     props: {
       res: res.data,

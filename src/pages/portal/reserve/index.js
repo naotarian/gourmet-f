@@ -62,6 +62,97 @@ const index = props => {
     remarks: '',
   })
   const submit = async () => {
+    let err = false
+    setGuestInformationErrors({
+      lastName: '',
+      firstName: '',
+      lastNameKana: '',
+      firstNameKana: '',
+      email: '',
+      cellPhone: '',
+      fixedPhone: '',
+      remarks: '',
+    })
+    if (guestInformation.lastName.length === 0) {
+      setGuestInformationErrors(prev => ({
+        ...prev,
+        lastName: '入力は必須です。',
+      }))
+      err = true
+    }
+    if (guestInformation.firstName.length === 0) {
+      setGuestInformationErrors(prev => ({
+        ...prev,
+        firstName: '入力は必須です。',
+      }))
+      err = true
+    }
+    if (guestInformation.lastNameKana.length === 0) {
+      setGuestInformationErrors(prev => ({
+        ...prev,
+        lastNameKana: '入力は必須です。',
+      }))
+      err = true
+    }
+    const regex = /^[ァ-ヶー　]*$/
+    if (!regex.test(guestInformation.lastNameKana)) {
+      setGuestInformationErrors(prev => ({
+        ...prev,
+        lastNameKana: '全角カタカナで入力してください。',
+      }))
+      err = true
+    }
+    if (guestInformation.firstNameKana.length === 0) {
+      setGuestInformationErrors(prev => ({
+        ...prev,
+        firstNameKana: '入力は必須です。',
+      }))
+      err = true
+    }
+    if (!regex.test(guestInformation.firstNameKana)) {
+      setGuestInformationErrors(prev => ({
+        ...prev,
+        firstNameKana: '全角カタカナで入力してください。',
+      }))
+      err = true
+    }
+
+    if (guestInformation.email.length === 0) {
+      setGuestInformationErrors(prev => ({
+        ...prev,
+        email: '入力は必須です。',
+      }))
+      err = true
+    }
+    var emailRegex =
+      /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/
+    if (!emailRegex.test(guestInformation.email)) {
+      setGuestInformationErrors(prev => ({
+        ...prev,
+        email: 'メールアドレスを正しい形式で入力してください。',
+      }))
+      err = true
+    }
+    if (guestInformation.cellPhone.length === 0) {
+      setGuestInformationErrors(prev => ({
+        ...prev,
+        cellPhone: '入力は必須です。',
+      }))
+      err = true
+    }
+    const regexp1 = /^(050|070|080|090)\d{4}\d{4}$/
+    const regexp2 = /^(050|070|080|090)-\d{4}-\d{4}$/
+    if (
+      !regexp1.test(guestInformation.cellPhone) &&
+      !regexp2.test(guestInformation.cellPhone)
+    ) {
+      setGuestInformationErrors(prev => ({
+        ...prev,
+        cellPhone: '電話番号を正しい形式で入力してください。',
+      }))
+      err = true
+    }
+    if (err) return
     const sendDatas = {
       guestInformation: guestInformation,
       storeId: store.id,

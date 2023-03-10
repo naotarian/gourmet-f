@@ -90,7 +90,6 @@ export default function Home(props) {
 
 export const getServerSideProps = async ctx => {
   const cookie = ctx.req?.headers.cookie
-  console.log(ctx.req)
   const res = await axios.get('/api/portal/top', {
     headers: {
       origin: process.env.ORIGIN,
